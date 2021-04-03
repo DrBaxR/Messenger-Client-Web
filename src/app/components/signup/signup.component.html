@@ -1,3 +1,4 @@
+<div class="container">
 <form [formGroup]="signupForm">
     <div class="form-group">
         <label for="usernameImput">Username</label>
@@ -16,3 +17,4 @@
     <button type="submit" class="btn btn-primary" (click)="validateForm()" [routerLink]="['/signin']"
         [disabled]="signupForm.invalid">Sign Up</button>
 </form>
+</div>
