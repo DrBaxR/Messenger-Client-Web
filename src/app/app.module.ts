@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileDisplayComponent } from './components/profile-display/profile-display.component';
+import { NavbarProfileComponent } from './components/navbar-profile/navbar-profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProfileDisplayComponent } from './components/profile-display/profile-di
     SignupComponent,
     ProfileComponent,
     NavbarComponent,
-    ProfileDisplayComponent
+    ProfileDisplayComponent,
+    NavbarProfileComponent
   ],
   imports: [
     BrowserModule,

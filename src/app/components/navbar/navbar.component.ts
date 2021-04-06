@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { User } from 'src/app/data-models/user';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +11,19 @@ import { User } from 'src/app/data-models/user';
 export class NavbarComponent implements OnInit {
 
   collapsed=true;
-  user: User;
-  constructor() { }
+  loggedUser$: Observable<User>;
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem("user")) as User;
+
+    if(!user) {
+      this.loggedUser$ = this.apiService.getLoggedUser();
+    } else {
+      this.loggedUser$ = of(user);
+    }
   }
-  logout(){
-    
-  }
+  
+  
 
 }
