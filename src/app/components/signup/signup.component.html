@@ -13,6 +13,9 @@
         <input formControlName="password" type="password" class="form-control" id="passwordInput"
             placeholder="Password">
     </div>
+    <div>
+        <small>Already have an account? <a [routerLink]="['/signin']">Sign in</a></small>
+    </div>
     <button type="submit" class="btn btn-primary" (click)="validateForm()" [routerLink]="['/signin']"
         [disabled]="signupForm.invalid">Sign Up</button>
 </form>

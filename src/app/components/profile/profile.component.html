@@ -1,6 +1,3 @@
-<div *ngIf="loggedUser">
-    <p>{{ loggedUser.id }}</p>
-    <p>{{ loggedUser.username }}</p>
-    <p>{{ loggedUser.password }}</p>
-    <p>{{ loggedUser.email }}</p>
-</div>
+<h1>Profile Page</h1>
+<app-profile-display [user]="loggedUser$ | async"></app-profile-display>
+<button (click)="onLogoutButtonClick()">Logout</button>

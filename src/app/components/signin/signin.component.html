@@ -7,8 +7,11 @@
         <label for="passwordInput">Password</label>
         <input formControlName="password" type="password" class="form-control" id="passwordInput"
             placeholder="Password">
-        <small><a [routerLink]="['/signup']">Sign Up</a></small>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="validateForm()"
-        [disabled]="signinForm.invalid">Sign In</button>
+    <div>
+        <small>Don't have an account? <a [routerLink]="['/signup']">Sign Up</a></small>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="validateForm()" [disabled]="signinForm.invalid">
+        Sign In
+    </button>
 </form>
