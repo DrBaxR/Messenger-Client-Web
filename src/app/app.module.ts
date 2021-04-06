@@ -13,6 +13,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileDisplayComponent } from './components/profile-display/profile-display.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     SigninComponent,
     SignupComponent,
     ProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileDisplayComponent
   ],
   imports: [
     BrowserModule,

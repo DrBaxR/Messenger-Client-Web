@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { User } from 'src/app/data-models/user';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -8,12 +9,24 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  loggedUser: User;
+  loggedUser$: Observable<User>;
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService
+  ) { }
 
   ngOnInit(): void {
-    this.apiService.getLoggedUser().subscribe(user => this.loggedUser = user);
+    const user = JSON.parse(localStorage.getItem("user")) as User;
+
+    if(!user) {
+      this.loggedUser$ = this.apiService.getLoggedUser();
+    } else {
+      this.loggedUser$ = of(user);
+    }
+  }
+
+  onLogoutButtonClick() {
+    this.apiService.logout();
   }
 
 }

@@ -14,10 +14,6 @@ export class ApiService {
   userId: string = '';
   loggedUser: User;
 
-  private httpHeaders = {
-    'Authorization': `Bearer ${this.jwt}`
-  };
-
   constructor(private httpClient: HttpClient) { }
 
   getGroups() {
@@ -52,9 +48,17 @@ export class ApiService {
         this.jwt = res.accessToken;
         this.userId = res.id;
 
-        // this.getLoggedUser().subscribe(user => this.loggedUser = user);
+        this.getLoggedUser().subscribe(user => {
+          let u = user as any;
+          delete u.groups;
+          delete u.roles;
+          delete u._links;
+
+          this.loggedUser = u;
+          localStorage.setItem("user", JSON.stringify(this.loggedUser));
+        })
       },
-      error => console.error("Wrong credentials")
+      () => console.error("Wrong credentials")
     );
 
     return observable;
@@ -68,5 +72,9 @@ export class ApiService {
     }
 
     return this.httpClient.post(`${this.apiUrl}/api/auth/signup`, body);
+  }
+
+  logout() {
+    localStorage.removeItem("user");
   }
 }
