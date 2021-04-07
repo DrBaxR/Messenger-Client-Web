@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './components/signin/signin.component';
@@ -20,6 +21,7 @@ import { MessengerComponent } from './components/messenger/messenger.component';
 import { MessageAreaComponent } from './components/message-area/message-area.component';
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { rxStompConfig } from './configs/rx-stomp-config';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { rxStompConfig } from './configs/rx-stomp-config';
     ReactiveFormsModule,
     NgbModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    BrowserAnimationsModule,
+    NgxInfiniteScrollerModule,
   ],
   providers: [
     {

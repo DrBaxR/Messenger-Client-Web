@@ -1,0 +1,114 @@
+.chat-container {
+    background-color: #00250a;
+
+    .messages {
+        max-height: 500px;
+        overflow-y: scroll;
+        margin: 0 5px;
+    
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            margin: 5px;
+
+            .message {
+                width: 20%;
+                border-radius: 15px;
+                padding: 10px;
+                width: fit-content;
+                max-width: 50%;
+                word-wrap: break-word;
+                box-shadow: 0 10px 15px black;
+
+                .header {
+                    margin-bottom: 10px;
+
+                    .date {
+                        font-style: italic;
+                        font-size: 11px;
+                    }
+
+                    .name {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+    
+    .input {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    
+        input {
+            flex: 1;
+        }
+
+        input:focus {
+            outline: none;
+        }
+    }
+    
+    .other {
+        align-items: flex-start;
+
+        .message {
+            background-color: #94ffb1;
+            color: black;
+        }
+    }
+
+    .own {
+        align-items: flex-end;
+
+        .message {
+            background-color: #096622;
+            color: white;
+
+            .header {
+                text-align: right;
+            }
+        }
+    }
+
+    .input {
+        padding: 15px;
+        background-color: lightgrey;
+
+        .user-input {
+            height: 40px;
+            border-radius: 20px;
+            border: 0;
+            padding: 0 10px;
+            margin-right: 15px;
+            box-shadow: inset 0 0 4px #424242;
+        }
+
+        .send-button {
+            border: 0;
+            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            box-shadow: inset 0 0 4px #424242;
+        }
+    }
+}
+
+.messages::-webkit-scrollbar {
+    width: 7px;
+}
+
+.messages::-webkit-scrollbar-track {
+    border-radius: 10px
+}
+
+.messages::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.322);
+}
