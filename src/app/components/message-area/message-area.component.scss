@@ -44,6 +44,10 @@
         input {
             flex: 1;
         }
+
+        input:focus {
+            outline: none;
+        }
     }
     
     .other {

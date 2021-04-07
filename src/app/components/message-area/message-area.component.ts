@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './message-area.component.html',
   styleUrls: ['./message-area.component.scss']
 })
-export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
+export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   @Input('user') user: User;
   @Input('groupId') groupId: string;
   @Input('groupUsers') groupUsers: User[];
@@ -43,10 +43,6 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
     });
   }
 
-  ngAfterViewChecked() {
-    // this.scrollToBottom();
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     // if (changes.groupId) {
     //   if (this.groupId && this.topicSubscription) {
@@ -68,7 +64,10 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
   connect() {
     this.topicSubscription = this.rxStompService.watch(`/topic/group.${this.groupId}`).subscribe((message: Message) => {
       this.messages.push(JSON.parse(message.body));
-      // this.scrollToBottom();
+      // TODO: MUST FIND A BETTER WAY TO DO THIS
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100);
     });
   }
 
@@ -110,10 +109,13 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
     })
   }
 
-  // TODO: make this not be called everytime a message is received
   scrollToBottom() {
     try {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     } catch (err) { }
+  }
+
+  onScrollUp() {
+    this.extendMessagesToNextPage();
   }
 }

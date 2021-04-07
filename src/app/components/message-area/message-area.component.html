@@ -1,6 +1,8 @@
 <div class="chat-container">
-    <div #messagesArea class="messages">
-        <button (click)="extendMessagesToNextPage()">MORE</button>
+    <div #messagesArea class="messages" 
+        ngxInfiniteScroller 
+        strategy="scrollingToTop"
+        (onScrollUp)="extendMessagesToNextPage()">
         <div *ngFor="let message of messages" class="message-container" [ngClass]="{
                 'own': message.sender === user.id,
                 'other': message.sender !== user.id
