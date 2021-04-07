@@ -1,0 +1,2 @@
+<h1>{{ (user$ | async).username }}</h1>
+<app-message-area [groupId]="groupId" [groupUsers]="groupUsers$ | async" [user]="user$ | async"></app-message-area>

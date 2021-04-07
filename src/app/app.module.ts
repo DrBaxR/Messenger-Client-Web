@@ -17,6 +17,10 @@ import { ProfileDisplayComponent } from './components/profile-display/profile-di
 import { NavbarProfileComponent } from './components/navbar-profile/navbar-profile.component';
 import { GroupsRoomComponent } from './components/groups-room/groups-room.component';
 import { GroupsComponent } from './components/groups/groups.component';
+import { MessengerComponent } from './components/messenger/messenger.component';
+import { MessageAreaComponent } from './components/message-area/message-area.component';
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+import { rxStompConfig } from './configs/rx-stomp-config';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import { GroupsComponent } from './components/groups/groups.component';
     ProfileDisplayComponent,
     NavbarProfileComponent,
     GroupsRoomComponent,
-    GroupsComponent
+    GroupsComponent,
+    ProfileDisplayComponent,
+    MessengerComponent,
+    MessageAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,8 @@ import { GroupsComponent } from './components/groups/groups.component';
       { path: 'signup', component: SignupComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'groups-room', component: GroupsRoomComponent },
-      { path: 'groups', component: GroupsComponent }
+      { path: 'groups', component: GroupsComponent },
+      { path: 'messenger', component: MessengerComponent }
     ]),
     HttpClientModule,
     ReactiveFormsModule,
@@ -48,7 +56,16 @@ import { GroupsComponent } from './components/groups/groups.component';
     NgbPaginationModule,
     NgbAlertModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: InjectableRxStompConfig,
+      useValue: rxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

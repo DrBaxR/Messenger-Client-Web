@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { AppMessage } from '../data-models/app-message';
 import { User } from '../data-models/user';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class ApiService {
   apiUrl = 'http://localhost:8080';
   websocketUrl = 'ws://localhost:8080/messenger';
 
-  jwt: string = '';
+  jwt: string = null;
   userId: string = '';
   loggedUser: User;
 
@@ -20,18 +21,39 @@ export class ApiService {
     return this.httpClient.get(`${this.apiUrl}/groups`,
       {
         headers: {
-          'Authorization': `Bearer ${this.jwt}`
+          'Authorization': `Bearer ${this.getJwt()}`
         }
       })
   }
 
-  getLoggedUser() {
-    return this.httpClient.get<User>(`${this.apiUrl}/users/${this.userId}`,
+  getLoggedUser(): Observable<User> {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+
+
+    return user? of(user) : this.httpClient.get<User>(`${this.apiUrl}/users/${this.userId}`,
       {
         headers: {
-          'Authorization': `Bearer ${this.jwt}`
+          'Authorization': `Bearer ${this.getJwt()}`
         }
       })
+  }
+
+  getGroupMessages(groupId: string) {
+    return this.httpClient.get<AppMessage[]>(`${this.apiUrl}/groups/${groupId}/messages`,
+      {
+        headers: {
+          'Authorization': `Bearer ${this.getJwt()}`
+        }
+      });
+  }
+
+  getGroupUsers(groupId: string) {
+    return this.httpClient.get<User[]>(`${this.apiUrl}/groups/${groupId}/users`,
+      {
+        headers: {
+          'Authorization': `Bearer ${this.getJwt()}`
+        }
+      });
   }
 
   signin(email: string, password: string) {
@@ -48,6 +70,8 @@ export class ApiService {
         this.jwt = res.accessToken;
         this.userId = res.id;
 
+        localStorage.setItem('jwt', this.jwt);
+
         this.getLoggedUser().subscribe(user => {
           let u = user as any;
           delete u.groups;
@@ -55,7 +79,7 @@ export class ApiService {
           delete u._links;
 
           this.loggedUser = u;
-          localStorage.setItem("user", JSON.stringify(this.loggedUser));
+          localStorage.setItem('user', JSON.stringify(this.loggedUser));
         })
       },
       () => console.error("Wrong credentials")
@@ -75,6 +99,15 @@ export class ApiService {
   }
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
+  }
+
+  getJwt() {
+    if (!this.jwt) {
+      this.jwt = localStorage.getItem('jwt');
+    }
+
+    return this.jwt;
   }
 }
