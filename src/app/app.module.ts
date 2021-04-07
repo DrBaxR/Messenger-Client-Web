@@ -15,7 +15,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileDisplayComponent } from './components/profile-display/profile-display.component';
 import { NavbarProfileComponent } from './components/navbar-profile/navbar-profile.component';
-import { GroupsRoomComponent } from './components/groups-room/groups-room.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { MessengerComponent } from './components/messenger/messenger.component';
 import { MessageAreaComponent } from './components/message-area/message-area.component';
@@ -31,7 +30,6 @@ import { rxStompConfig } from './configs/rx-stomp-config';
     NavbarComponent,
     ProfileDisplayComponent,
     NavbarProfileComponent,
-    GroupsRoomComponent,
     GroupsComponent,
     ProfileDisplayComponent,
     MessengerComponent,
@@ -46,8 +44,6 @@ import { rxStompConfig } from './configs/rx-stomp-config';
       { path: 'signin', component: SigninComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'groups-room', component: GroupsRoomComponent },
-      { path: 'groups', component: GroupsComponent },
       { path: 'messenger', component: MessengerComponent }
     ]),
     HttpClientModule,
