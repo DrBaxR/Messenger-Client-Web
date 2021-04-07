@@ -27,7 +27,7 @@ export class SigninComponent implements OnInit {
       this.signinForm.get('email').value,
       this.signinForm.get('password').value)
       .subscribe({
-        next: () => this.router.navigate(['/profile'])
+        next: () => this.router.navigate(['/messenger'])
       });
   }
 }

@@ -13,6 +13,10 @@ import { SignupComponent } from './components/signup/signup.component';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDisplayComponent } from './components/profile-display/profile-display.component';
+import { MessengerComponent } from './components/messenger/messenger.component';
+import { MessageAreaComponent } from './components/message-area/message-area.component';
+import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
+import { rxStompConfig } from './configs/rx-stomp-config';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { ProfileDisplayComponent } from './components/profile-display/profile-di
     SigninComponent,
     SignupComponent,
     ProfileComponent,
-    ProfileDisplayComponent
+    ProfileDisplayComponent,
+    MessengerComponent,
+    MessageAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,8 @@ import { ProfileDisplayComponent } from './components/profile-display/profile-di
       { path: '', redirectTo: '/signin', pathMatch: 'full' },
       { path: 'signin', component: SigninComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      { path: 'messenger', component: MessengerComponent }
     ]),
     HttpClientModule,
     ReactiveFormsModule,
@@ -38,7 +45,16 @@ import { ProfileDisplayComponent } from './components/profile-display/profile-di
     NgbPaginationModule,
     NgbAlertModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: InjectableRxStompConfig,
+      useValue: rxStompConfig,
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig],
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
