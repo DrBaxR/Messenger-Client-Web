@@ -26,8 +26,7 @@ export class GroupsComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getUserGroups(this.user.id).subscribe(group => {
       this.groups = group;
-      console.log(this.groups);
-
+      
     })
     this.currentUser = JSON.parse(localStorage.getItem('user'));
   }

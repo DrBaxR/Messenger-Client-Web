@@ -1,15 +1,18 @@
-<div class="card border-primary mb-3" style="max-width: 20rem;">
-    <div class="card-body text-primary">
+<div class="group-container">
+    <div class="user-details">
         <h2>{{ currentUser.username }}'s groups</h2>
     </div>
-    <div class="list-group">
-      <ul class="list-group">
-        <li *ngFor="let group of groups" class="list-group-item">
-          <button (click)="changeGroup(group.id)" class="list-group-item list-group-item-action list-group-item-primary">
+    <div *ngFor="let group of groups"
+        class="btn-group" 
+        ngxInfiniteScroller 
+        strategy="scrollingToDown">
+      
+        
+          <button (click)="changeGroup(group.id)" class="button">
             {{ group.name }}
           </button>
-        </li>
-      </ul>
+       
+    
     </div>
 </div>
 

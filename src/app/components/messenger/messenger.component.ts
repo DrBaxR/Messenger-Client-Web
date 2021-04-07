@@ -24,7 +24,7 @@ export class MessengerComponent implements OnInit {
 
   ngOnInit(): void {
     // for testing only
-    this.groupId = '60643f2d537dc16a84ca8059';
+    this.groupId = '606db382a6934801285d2f79';
 
     //take the user for having the user id for getUserGroups call
     this.userData = JSON.parse(localStorage.getItem('user'));
@@ -37,6 +37,9 @@ export class MessengerComponent implements OnInit {
   changeGroup(group: string)
   {
     this.groupId = group;
+
+    //print to console the groupId to verify if eventEmitter works
+    console.log(this.groupId);
   }
 
 }
