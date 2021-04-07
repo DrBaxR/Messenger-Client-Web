@@ -38,8 +38,8 @@ export class ApiService {
       })
   }
 
-  getGroupMessages(groupId: string) {
-    return this.httpClient.get<AppMessage[]>(`${this.apiUrl}/groups/${groupId}/messages`,
+  getGroupMessages(groupId: string, page: number = 0, size: number = 20) {
+    return this.httpClient.get<AppMessage[]>(`${this.apiUrl}/groups/${groupId}/messages?page=${page}&size=${size}`,
       {
         headers: {
           'Authorization': `Bearer ${this.getJwt()}`

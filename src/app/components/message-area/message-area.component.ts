@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
@@ -12,15 +12,18 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './message-area.component.html',
   styleUrls: ['./message-area.component.scss']
 })
-export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
+export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
   @Input('user') user: User;
   @Input('groupId') groupId: string;
-  // array with all the users in the group
   @Input('groupUsers') groupUsers: User[];
+
+  @ViewChild('messagesArea') messagesContainer: ElementRef;
 
   messages: AppMessage[] = [];
   topicSubscription: Subscription = null;
   messageInput: FormControl;
+  page: number = 0;
+  SIZE: number = 20;
 
   constructor(
     private apiService: ApiService,
@@ -31,11 +34,17 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
     this.messageInput = new FormControl('');
 
     // will probably have to move this to onChanges
-    this.apiService.getGroupMessages(this.groupId).subscribe(messages => {
+    this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(messages => {
       this.messages = messages;
-      console.log(messages);
+      this.messages.reverse();
+      this.page++;
+
       this.connect();
     });
+  }
+
+  ngAfterViewChecked() {
+    // this.scrollToBottom();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -59,6 +68,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   connect() {
     this.topicSubscription = this.rxStompService.watch(`/topic/group.${this.groupId}`).subscribe((message: Message) => {
       this.messages.push(JSON.parse(message.body));
+      // this.scrollToBottom();
     });
   }
 
@@ -79,7 +89,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
     this.topicSubscription.unsubscribe();
   }
 
-  onSendButtonClick() {
+  onMessageSent() {
     this.sendMessage(this.messageInput.value);
 
     this.messageInput.setValue('');
@@ -89,5 +99,21 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
     const user = this.groupUsers.find(user => user.id === message.sender);
 
     return user ? user.username : 'Unknown';
+  }
+
+  extendMessagesToNextPage() {
+    this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(newMessages => {
+      this.messages.reverse();
+      this.messages.push(...newMessages);
+      this.messages.reverse();
+      this.page++;
+    })
+  }
+
+  // TODO: make this not be called everytime a message is received
+  scrollToBottom() {
+    try {
+      this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 }

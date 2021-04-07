@@ -17,6 +17,7 @@ import { MessengerComponent } from './components/messenger/messenger.component';
 import { MessageAreaComponent } from './components/message-area/message-area.component';
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { rxStompConfig } from './configs/rx-stomp-config';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { rxStompConfig } from './configs/rx-stomp-config';
     ReactiveFormsModule,
     NgbModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
