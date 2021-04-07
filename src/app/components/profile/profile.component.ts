@@ -25,8 +25,4 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  onLogoutButtonClick() {
-    this.apiService.logout();
-  }
-
 }

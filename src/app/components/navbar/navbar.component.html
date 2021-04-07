@@ -6,8 +6,13 @@
       </button>
 
     <div class="collapse navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
-        <ul class="navbar-nav ml-auto">
-            <app-navbar-profile [user]="loggedUser$ | async"></app-navbar-profile>
-        </ul>
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf="(loggedUser$ |async)" class="nav-item">
+          <a class="nav-link" [routerLink]="['/groups-room']">Groups Room</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+          <app-navbar-profile [user]="loggedUser$ | async"></app-navbar-profile>
+      </ul>
     </div>
   </nav>

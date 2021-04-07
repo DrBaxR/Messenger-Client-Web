@@ -15,6 +15,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileDisplayComponent } from './components/profile-display/profile-display.component';
 import { NavbarProfileComponent } from './components/navbar-profile/navbar-profile.component';
+import { GroupsRoomComponent } from './components/groups-room/groups-room.component';
+import { GroupsComponent } from './components/groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NavbarProfileComponent } from './components/navbar-profile/navbar-profi
     ProfileComponent,
     NavbarComponent,
     ProfileDisplayComponent,
-    NavbarProfileComponent
+    NavbarProfileComponent,
+    GroupsRoomComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,9 @@ import { NavbarProfileComponent } from './components/navbar-profile/navbar-profi
       { path: '', redirectTo: '/signin', pathMatch: 'full' },
       { path: 'signin', component: SigninComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      { path: 'groups-room', component: GroupsRoomComponent },
+      { path: 'groups', component: GroupsComponent }
     ]),
     HttpClientModule,
     ReactiveFormsModule,
