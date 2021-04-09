@@ -1,19 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/data-models/user';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class ProfileComponent implements OnInit {
-  loggedUser$: Observable<User>;
+export class NavbarComponent implements OnInit {
 
-  constructor(
-    private apiService: ApiService
-  ) { }
+  collapsed=true;
+  loggedUser$: Observable<User>;
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem("user")) as User;
@@ -24,5 +23,6 @@ export class ProfileComponent implements OnInit {
       this.loggedUser$ = of(user);
     }
   }
+  
 
 }

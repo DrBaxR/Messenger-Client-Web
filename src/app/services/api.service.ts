@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AppMessage } from '../data-models/app-message';
+import { Group } from '../data-models/group';
 import { User } from '../data-models/user';
 
 @Injectable({
@@ -24,6 +25,16 @@ export class ApiService {
           'Authorization': `Bearer ${this.getJwt()}`
         }
       })
+  }
+
+  getUserGroups(userId)
+  {
+    return this.httpClient.get<Group[]>(`${this.apiUrl}/users/${userId}/groups`,
+      {
+        headers: {
+          'Authorization': `Bearer ${this.getJwt()}`
+        }
+      });
   }
 
   getLoggedUser(): Observable<User> {

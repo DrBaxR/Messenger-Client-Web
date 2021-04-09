@@ -1,17 +1,28 @@
-<form [formGroup]="signinForm">
-    <div class="form-group">
-        <label for="emailInput">Email address</label>
-        <input formControlName="email" type="email" class="form-control" id="emailInput" placeholder="Enter email">
+<div id="cover-caption">
+    <div class="container">
+        <div class="row text-white">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                <h1 class="display-5 py-2 text-truncate">Welcome to IMessage</h1>
+                <div class="px-2">
+                    <form [formGroup]="signinForm">
+                        <div class="form-group">
+                            <label for="emailInput">Email address</label>
+                            <input formControlName="email" type="email" class="form-control" id="emailInput" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordInput">Password</label>
+                            <input formControlName="password" type="password" class="form-control" id="passwordInput"
+                                placeholder="Password">
+                        </div>
+                        <div>
+                            <small>Don't have an account? <a [routerLink]="['/signup']">Sign Up</a></small>
+                        </div>
+                        <button type="submit" class="btn btn-primary" (click)="validateForm()" [disabled]="signinForm.invalid">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="passwordInput">Password</label>
-        <input formControlName="password" type="password" class="form-control" id="passwordInput"
-            placeholder="Password">
-    </div>
-    <div>
-        <small>Don't have an account? <a [routerLink]="['/signup']">Sign Up</a></small>
-    </div>
-    <button type="submit" class="btn btn-primary" (click)="validateForm()" [disabled]="signinForm.invalid">
-        Sign In
-    </button>
-</form>
+</div>
