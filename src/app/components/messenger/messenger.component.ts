@@ -12,9 +12,9 @@ import { ApiService } from 'src/app/services/api.service';
 export class MessengerComponent implements OnInit {
 
   groupId: string;
-  groupUsers$: Observable<User[]>;
   userGroups$: Observable<Group[]>;
-  user$: Observable<User>;
+  // user$: Observable<User>;
+  user: User;
 
   userData: User;
 
@@ -27,15 +27,18 @@ export class MessengerComponent implements OnInit {
     this.groupId = '60632badcce5483f5b666fc3';
 
     //take the user for having the user id for getUserGroups call
-    this.userData = JSON.parse(localStorage.getItem('user'));
+    this.apiService.loggedUser$.asObservable().subscribe(user => {
+      this.user = user;
 
-    // this.userGroups$ = this.apiService.getUserGroups(this.userData.id);
-    // this.groupUsers$ = this.apiService.getGroupUsers(this.groupId);
-    this.user$ = this.apiService.getLoggedUser();
+      if (user) {
+        this.userGroups$ = this.apiService.getUserGroups(this.user?.id);
+      }
+    });
+
+    // this.user$ = this.apiService.getLoggedUser();
   }
 
-  changeGroup(group: string)
-  {
+  changeGroup(group: string) {
     this.groupId = group;
 
     //print to console the groupId to verify if eventEmitter works

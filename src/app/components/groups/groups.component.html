@@ -1,18 +1,10 @@
 <div class="group-container">
-    <div class="user-details">
-        <h2>{{ currentUser.username }}'s groups</h2>
-    </div>
-    <div *ngFor="let group of groups"
-        class="btn-group" 
-        ngxInfiniteScroller 
-        strategy="scrollingToDown">
-      
-        
-          <button (click)="changeGroup(group.id)" class="button">
-            {{ group.name }}
-          </button>
-       
-    
-    </div>
+  <div class="user-details">
+    <h2>{{ user?.username }}'s groups</h2>
+  </div>
+  <div *ngFor="let group of userGroups" class="btn-group" ngxInfiniteScroller strategy="scrollingToDown">
+    <button (click)="changeGroup(group.id)" class="button">
+      {{ group.name }}
+    </button>
+  </div>
 </div>
-

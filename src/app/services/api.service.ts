@@ -20,9 +20,6 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // signin
-  // signout
-
   getGroups() {
     return this.httpClient.get(`${this.apiUrl}/groups`,
       {

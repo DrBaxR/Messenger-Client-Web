@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/data-models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, OnChanges {
+export class NavbarComponent implements OnInit {
 
   @Input() user: User = null;
 
@@ -27,11 +27,4 @@ export class NavbarComponent implements OnInit, OnChanges {
       this.loggedUser$ = of(user);
     }
   }
-  
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes.user) {
-      console.log(this.user);
-    }
-  }
-
 }
