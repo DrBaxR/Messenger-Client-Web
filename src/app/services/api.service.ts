@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AppMessage } from '../data-models/app-message';
 import { Group } from '../data-models/group';
 import { User } from '../data-models/user';
@@ -16,7 +16,12 @@ export class ApiService {
   userId: string = '';
   loggedUser: User;
 
+  loggedUser$: BehaviorSubject<User> = new BehaviorSubject(null);
+
   constructor(private httpClient: HttpClient) { }
+
+  // signin
+  // signout
 
   getGroups() {
     return this.httpClient.get(`${this.apiUrl}/groups`,
@@ -90,6 +95,9 @@ export class ApiService {
           delete u._links;
 
           this.loggedUser = u;
+
+          // new
+          this.loggedUser$.next(u);
           localStorage.setItem('user', JSON.stringify(this.loggedUser));
         })
       },
@@ -112,6 +120,9 @@ export class ApiService {
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('jwt');
+
+    // new
+    this.loggedUser$.next(null);
   }
 
   getJwt() {
@@ -120,5 +131,13 @@ export class ApiService {
     }
 
     return this.jwt;
+  }
+
+  initLoggedUser() {
+    if(!this.loggedUser$.value) {
+      const user = JSON.parse(localStorage.getItem('user')) as User;
+
+      this.loggedUser$.next(user)
+    }
   }
 }

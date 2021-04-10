@@ -24,13 +24,13 @@ export class MessengerComponent implements OnInit {
 
   ngOnInit(): void {
     // for testing only
-    this.groupId = '606db382a6934801285d2f79';
+    this.groupId = '60632badcce5483f5b666fc3';
 
     //take the user for having the user id for getUserGroups call
     this.userData = JSON.parse(localStorage.getItem('user'));
 
-    this.userGroups$ = this.apiService.getUserGroups(this.userData.id);
-    this.groupUsers$ = this.apiService.getGroupUsers(this.groupId);
+    // this.userGroups$ = this.apiService.getUserGroups(this.userData.id);
+    // this.groupUsers$ = this.apiService.getGroupUsers(this.groupId);
     this.user$ = this.apiService.getLoggedUser();
   }
 
