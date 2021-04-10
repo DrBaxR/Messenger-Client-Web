@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/data-models/user';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-profile-display',
@@ -9,8 +10,9 @@ import { User } from 'src/app/data-models/user';
 export class ProfileDisplayComponent implements OnInit, OnChanges {
   @Input('user') user: User;
 
+  username: string;
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
@@ -19,5 +21,10 @@ export class ProfileDisplayComponent implements OnInit, OnChanges {
     if(changes.user) {
       console.log(localStorage.getItem('user'));
     }
+  }
+
+  saveProfile(username: string){
+    this.apiService.updateUser(this.user.id, username).subscribe();
+
   }
 }
