@@ -2,6 +2,14 @@
     <div #messagesArea class="messages" ngxInfiniteScroller strategy="scrollingToTop"
         (onScrollUp)="extendMessagesToNextPage()" style="height: 100%">
         <div *ngIf="viewPrepared">
+            <div class="end-of-list">
+                <span *ngIf="endReached">
+                    No more messages here...
+                </span>
+                <span *ngIf="!endReached">
+                    Loading more messages...
+                </span>
+            </div>
             <div *ngFor="let message of messages" class="message-container" [ngClass]="{
                 'own': message.sender === user.id,
                 'other': message.sender !== user.id

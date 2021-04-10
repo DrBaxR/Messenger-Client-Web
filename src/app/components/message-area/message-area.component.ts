@@ -25,6 +25,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   page: number = 0;
   SIZE: number = 20;
   viewPrepared = false;
+  endReached = false;
 
   constructor(
     private apiService: ApiService,
@@ -34,7 +35,6 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.messageInput = new FormControl('');
 
-    // will probably have to move this to onChanges
     if (this.groupId) {
       this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(messages => {
         this.messages = messages;
@@ -62,6 +62,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
           this.messages = messages;
           this.messages.reverse();
           this.page = 1;
+          this.endReached = false;
 
           this.connect();
         });
@@ -75,7 +76,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
       // TODO: MUST FIND A BETTER WAY TO DO THIS
       setTimeout(() => {
         this.scrollToBottom();
-      }, 300);
+      }, 100);
     });
   }
 
@@ -109,12 +110,18 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   extendMessagesToNextPage() {
-    this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(newMessages => {
-      this.messages.reverse();
-      this.messages.push(...newMessages);
-      this.messages.reverse();
-      this.page++;
-    })
+    if (!this.endReached) {
+      this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(newMessages => {
+        if (newMessages.length >= this.SIZE) {
+          this.messages.reverse();
+          this.messages.push(...newMessages);
+          this.messages.reverse();
+          this.page++;
+        } else {
+          this.endReached = true;
+        }
+      })
+    }
   }
 
   scrollToBottom() {

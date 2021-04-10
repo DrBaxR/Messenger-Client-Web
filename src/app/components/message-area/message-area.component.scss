@@ -1,8 +1,10 @@
 .chat-container {
     background-color: #00250a;
+    display: flex;
+    flex-direction: column;
 
     .messages {
-        max-height: 500px;
+        flex: 1;
         overflow-y: scroll;
         margin: 0 5px;
     
@@ -33,6 +35,17 @@
                     }
                 }
             }
+        }
+
+        .end-of-list {
+            height: 50px;
+            color: white;
+            font-weight: 25;
+            font-style: italic;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         }
     }
     
@@ -75,6 +88,7 @@
     .input {
         padding: 15px;
         background-color: lightgrey;
+        border-radius: 15px;
 
         .user-input {
             height: 40px;

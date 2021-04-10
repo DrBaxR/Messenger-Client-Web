@@ -1,15 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Group } from 'src/app/data-models/group';
 import { User } from 'src/app/data-models/user';
-import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss']
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent implements OnInit, OnChanges {
 
   currentUser: User;
 
@@ -19,9 +17,17 @@ export class GroupsComponent implements OnInit {
 
   @Output() newGroupEvent = new EventEmitter<string>();
 
-  constructor(private apiService: ApiService) { }
+  constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.userGroups) {
+      if (this.userGroups) {
+        this.newGroupEvent.emit(this.userGroups[0].id);
+      }
+    }
   }
 
   changeGroup(group: string) {
