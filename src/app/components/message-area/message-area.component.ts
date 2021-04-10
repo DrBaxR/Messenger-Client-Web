@@ -24,6 +24,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   messageInput: FormControl;
   page: number = 0;
   SIZE: number = 20;
+  viewPrepared = false;
 
   constructor(
     private apiService: ApiService,
@@ -34,31 +35,38 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
     this.messageInput = new FormControl('');
 
     // will probably have to move this to onChanges
-    this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(messages => {
-      this.messages = messages;
-      this.messages.reverse();
-      this.page++;
+    if (this.groupId) {
+      this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(messages => {
+        this.messages = messages;
+        this.messages.reverse();
+        this.page = 1;
 
-      this.connect();
-    });
+        this.connect();
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (changes.groupId) {
-    //   if (this.groupId && this.topicSubscription) {
-    //     console.log('changes');
+    if (this.user && this.groupId && this.groupUsers) {
+      this.viewPrepared = true;
+    } else {
+      this.viewPrepared = false;
+    }
 
-    //     this.topicSubscription.unsubscribe();
-    //     this.apiService.getGroupMessages(this.groupId).subscribe(messages => {
-    //       this.messages = messages;
-    //       this.connect();
-    //     });
-    //   }
-    // }
+    if (changes.groupId) {
+      if (this.groupId) {
+        if (this.topicSubscription) {
+          this.topicSubscription.unsubscribe();
+        }
+        this.apiService.getGroupMessages(this.groupId).subscribe(messages => {
+          this.messages = messages;
+          this.messages.reverse();
+          this.page = 1;
 
-    // if (changes.groupUsers) {
-    //   console.log(this.groupUsers);
-    // }
+          this.connect();
+        });
+      }
+    }
   }
 
   connect() {
@@ -67,7 +75,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
       // TODO: MUST FIND A BETTER WAY TO DO THIS
       setTimeout(() => {
         this.scrollToBottom();
-      }, 100);
+      }, 300);
     });
   }
 
@@ -85,7 +93,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    this.topicSubscription.unsubscribe();
+    this.topicSubscription?.unsubscribe();
   }
 
   onMessageSent() {

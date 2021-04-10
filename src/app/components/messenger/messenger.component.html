@@ -5,8 +5,8 @@
             <app-groups (newGroupEvent)="changeGroup($event)" [groupId]="groupId"
                 [user]="user" [userGroups]="userGroups$ | async"></app-groups>
         </div>
-        <div style="float: right; width: 50%">
-            <!-- <app-message-area [groupId]="groupId" [groupUsers]="groupUsers$ | async" [user]="user$ | async"></app-message-area> -->
+        <div style="float: right; width: 50%; height: 100%">
+            <app-message-area [groupId]="groupId" [groupUsers]="groupUsers$ | async" [user]="user"></app-message-area>
         </div>
     </div>
 </div>

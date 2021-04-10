@@ -1,19 +1,19 @@
-<div class="chat-container">
-    <div #messagesArea class="messages" 
-        ngxInfiniteScroller 
-        strategy="scrollingToTop"
-        (onScrollUp)="extendMessagesToNextPage()">
-        <div *ngFor="let message of messages" class="message-container" [ngClass]="{
+<div class="chat-container" style="height: 100%">
+    <div #messagesArea class="messages" ngxInfiniteScroller strategy="scrollingToTop"
+        (onScrollUp)="extendMessagesToNextPage()" style="height: 100%">
+        <div *ngIf="viewPrepared">
+            <div *ngFor="let message of messages" class="message-container" [ngClass]="{
                 'own': message.sender === user.id,
                 'other': message.sender !== user.id
             }">
 
-            <div class="message">
-                <div class="header">
-                    <div class="date">{{ message.date | date: 'M/d/yy, h:mm a' }}</div>
-                    <div class="name" *ngIf="message.sender !== user.id">{{ getMessageUser(message) }}</div>
+                <div class="message">
+                    <div class="header">
+                        <div class="date">{{ message.date | date: 'M/d/yy, h:mm a' }}</div>
+                        <div class="name" *ngIf="message.sender !== user.id">{{ getMessageUser(message) }}</div>
+                    </div>
+                    <div class="body">{{ message.text }}</div>
                 </div>
-                <div class="body">{{ message.text }}</div>
             </div>
         </div>
     </div>
