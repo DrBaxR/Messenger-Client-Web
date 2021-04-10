@@ -118,7 +118,6 @@ export class ApiService {
     localStorage.removeItem('user');
     localStorage.removeItem('jwt');
 
-    // new
     this.loggedUser$.next(null);
   }
 
@@ -136,5 +135,13 @@ export class ApiService {
 
       this.loggedUser$.next(user)
     }
+  }
+
+  createUserGroup(userId:string, group: Group) {
+    return this.httpClient.post<Group>(`${this.apiUrl}/users/${userId}/groups`, group, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    })
   }
 }

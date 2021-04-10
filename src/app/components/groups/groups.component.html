@@ -1,7 +1,30 @@
 <div class="group-container">
   <div class="user-details">
     <input class="title" disabled [value]="user?.username + '\'s groups'">
-    <button class="add-button">
+
+    <ng-template #popTitle>Create a new group!</ng-template>
+    <ng-template #popContent>
+      <div class="popover-container">
+        <div class="input-group">
+          <label for="group-name" style="font-weight: bold; margin-right: 10px">Name:</label>
+          <input id="group-name" class="form-control" [formControl]="groupNameInput">
+        </div>
+        <div class="buttons-container">
+          <button class="round-button" (click)="closePopover()">
+            <span class="material-icons">
+              close
+            </span>
+          </button>
+          <button class="round-button" (click)="closePopoverAndCreateGroup()">
+            <span class="material-icons">
+              done
+            </span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <button class="add-button" type="button" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false"
+      placement="right" #popover="ngbPopover">
       <span class="material-icons">
         add
       </span>

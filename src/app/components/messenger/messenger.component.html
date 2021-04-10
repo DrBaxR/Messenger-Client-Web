@@ -1,7 +1,7 @@
 <div class="messenger-container">
     <div class="groups-container">
         <app-groups (newGroupEvent)="changeGroup($event)" [groupId]="groupId" [user]="user"
-            [userGroups]="userGroups$ | async" style="height: 450px">
+            [userGroups]="userGroups$ | async" (groupCreated)="onGroupCreated($event)" style="height: 450px">
         </app-groups>
     </div>
     <div class="messages-container">

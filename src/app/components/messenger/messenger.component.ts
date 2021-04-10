@@ -26,6 +26,9 @@ export class MessengerComponent implements OnInit {
 
       if (user) {
         this.userGroups$ = this.apiService.getUserGroups(this.user?.id);
+        this.userGroups$.subscribe(groups => {
+          this.groupId = groups[0]?.id;
+        })
       }
     });
   }
@@ -33,8 +36,17 @@ export class MessengerComponent implements OnInit {
   changeGroup(group: string) {
     this.groupId = group;
     if(this.groupId) {
-      this.groupUsers$ = this.apiService.getGroupUsers(this.groupId);
+      this.groupUsers$ = this.apiService.getGroupUsers(group);
     }
   }
 
+  onGroupCreated(name: string) {
+    const newGroup = {
+      name: name
+    } as any as Group;
+
+    this.apiService.createUserGroup(this.user.id, newGroup).subscribe(
+      value => this.userGroups$ = this.apiService.getUserGroups(this.user.id)
+    );
+  }
 }
