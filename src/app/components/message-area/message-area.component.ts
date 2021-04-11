@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
@@ -12,10 +12,12 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './message-area.component.html',
   styleUrls: ['./message-area.component.scss']
 })
-export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
+export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
   @Input('user') user: User;
   @Input('groupId') groupId: string;
   @Input('groupUsers') groupUsers: User[];
+
+  @Output() groupDeletedError: EventEmitter<string> = new EventEmitter();
 
   @ViewChild('messagesArea') messagesContainer: ElementRef;
 
@@ -24,7 +26,10 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   messageInput: FormControl;
   page: number = 0;
   SIZE: number = 20;
+  initialMessagesCount: number;
   viewPrepared = false;
+  endReached = false;
+  scrolledUp = false;
 
   constructor(
     private apiService: ApiService,
@@ -34,12 +39,12 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.messageInput = new FormControl('');
 
-    // will probably have to move this to onChanges
     if (this.groupId) {
       this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(messages => {
         this.messages = messages;
         this.messages.reverse();
         this.page = 1;
+        this.initialMessagesCount = messages.length;
 
         this.connect();
       });
@@ -58,24 +63,34 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
         if (this.topicSubscription) {
           this.topicSubscription.unsubscribe();
         }
-        this.apiService.getGroupMessages(this.groupId).subscribe(messages => {
-          this.messages = messages;
-          this.messages.reverse();
-          this.page = 1;
 
-          this.connect();
-        });
+        this.apiService.getGroupMessages(this.groupId).subscribe(
+          messages => {
+            this.messages = messages;
+            this.messages.reverse();
+            this.page = 1;
+            this.endReached = false;
+            this.initialMessagesCount = messages.length;
+            this.scrolledUp = false;
+
+            this.connect();
+          },
+          () => this.groupDeletedError.emit('This group does not exist, it probably was <b>deleted by another user</b>. Please refresh your page!')
+        );
       }
+    }
+  }
+
+  ngAfterViewChecked() {
+    if(!this.scrolledUp) {
+      this.scrollToBottom();
     }
   }
 
   connect() {
     this.topicSubscription = this.rxStompService.watch(`/topic/group.${this.groupId}`).subscribe((message: Message) => {
       this.messages.push(JSON.parse(message.body));
-      // TODO: MUST FIND A BETTER WAY TO DO THIS
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 300);
+      this.scrolledUp = false;
     });
   }
 
@@ -109,12 +124,18 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   extendMessagesToNextPage() {
-    this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(newMessages => {
-      this.messages.reverse();
-      this.messages.push(...newMessages);
-      this.messages.reverse();
-      this.page++;
-    })
+    if (!this.endReached) {
+      this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(newMessages => {
+        if (newMessages.length >= this.SIZE) {
+          this.messages.reverse();
+          this.messages.push(...newMessages);
+          this.messages.reverse();
+          this.page++;
+        } else {
+          this.endReached = true;
+        }
+      })
+    }
   }
 
   scrollToBottom() {
@@ -125,5 +146,6 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
 
   onScrollUp() {
     this.extendMessagesToNextPage();
+    this.scrolledUp = true;
   }
 }

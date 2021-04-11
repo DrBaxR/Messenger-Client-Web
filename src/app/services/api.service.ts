@@ -29,8 +29,7 @@ export class ApiService {
       })
   }
 
-  getUserGroups(userId)
-  {
+  getUserGroups(userId) {
     return this.httpClient.get<Group[]>(`${this.apiUrl}/users/${userId}/groups`,
       {
         headers: {
@@ -43,7 +42,7 @@ export class ApiService {
     const user = JSON.parse(localStorage.getItem('user')) as User;
 
 
-    return user? of(user) : this.httpClient.get<User>(`${this.apiUrl}/users/${this.userId}`,
+    return user ? of(user) : this.httpClient.get<User>(`${this.apiUrl}/users/${this.userId}`,
       {
         headers: {
           'Authorization': `Bearer ${this.getJwt()}`
@@ -118,7 +117,6 @@ export class ApiService {
     localStorage.removeItem('user');
     localStorage.removeItem('jwt');
 
-    // new
     this.loggedUser$.next(null);
   }
 
@@ -131,7 +129,7 @@ export class ApiService {
   }
 
   initLoggedUser() {
-    if(!this.loggedUser$.value) {
+    if (!this.loggedUser$.value) {
       const user = JSON.parse(localStorage.getItem('user')) as User;
 
       this.loggedUser$.next(user)
@@ -158,5 +156,29 @@ export class ApiService {
     });
     
     return observable;
+  }
+  
+  createUserGroup(userId: string, group: Group) {
+    return this.httpClient.post<Group>(`${this.apiUrl}/users/${userId}/groups`, group, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    })
+  }
+
+  addGroupUser(userEmail: string, groupId: string) {
+    return this.httpClient.post<User>(`${this.apiUrl}/groups/${groupId}/users`, userEmail, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    });
+  }
+
+  deleteGroup(groupId: string) {
+    return this.httpClient.delete(`${this.apiUrl}/groups/${groupId}`, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    });
   }
 }

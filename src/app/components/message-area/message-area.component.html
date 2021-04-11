@@ -1,25 +1,52 @@
-<div class="chat-container" style="height: 100%">
-    <div #messagesArea class="messages" ngxInfiniteScroller strategy="scrollingToTop"
-        (onScrollUp)="extendMessagesToNextPage()" style="height: 100%">
+<div class="chat-container"
+     style="height: 100%">
+    <div #messagesArea
+         class="messages"
+         style="height: 100%;"
+         infiniteScroll
+         [scrollWindow]="false"
+         [alwaysCallback]="true"
+         [infiniteScrollDistance]="3"
+         [infiniteScrollUpDistance]="1.5"
+         [infiniteScrollThrottle]="50"
+         (scrolledUp)="onScrollUp()">
         <div *ngIf="viewPrepared">
-            <div *ngFor="let message of messages" class="message-container" [ngClass]="{
-                'own': message.sender === user.id,
-                'other': message.sender !== user.id
-            }">
-
+            <div class="end-of-list">
+                <div *ngIf="initialMessagesCount >= SIZE">
+                    <span *ngIf="endReached">
+                        Group was created
+                    </span>
+                    <span *ngIf="!endReached">
+                        Loading more messages...
+                    </span>
+                </div>
+                <div *ngIf="initialMessagesCount < SIZE">
+                    <span>Group was created</span>
+                </div>
+            </div>
+            <div *ngFor="let message of messages"
+                 class="message-container"
+                 [ngClass]="{
+                    'own': message.sender === user.id,
+                    'other': message.sender !== user.id
+                }">
                 <div class="message">
                     <div class="header">
                         <div class="date">{{ message.date | date: 'M/d/yy, h:mm a' }}</div>
-                        <div class="name" *ngIf="message.sender !== user.id">{{ getMessageUser(message) }}</div>
+                        <div class="name"
+                             *ngIf="message.sender !== user.id">{{ getMessageUser(message) }}</div>
                     </div>
                     <div class="body">{{ message.text }}</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="input" (keyup.enter)="onMessageSent()">
-        <input class="user-input" [formControl]="messageInput">
-        <button (click)="onMessageSent()" class="send-button">
+    <div class="input"
+         (keyup.enter)="onMessageSent()">
+        <input class="user-input"
+               [formControl]="messageInput">
+        <button (click)="onMessageSent()"
+                class="send-button">
             <span class="material-icons">
                 send
             </span>
