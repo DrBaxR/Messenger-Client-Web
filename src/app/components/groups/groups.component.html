@@ -5,9 +5,9 @@
     <ng-template #popTitle>Create a new group!</ng-template>
     <ng-template #popContent>
       <div class="popover-container">
-        <div class="input-group">
+        <div class="form-group input-group">
           <label for="group-name" style="font-weight: bold; margin-right: 10px">Name:</label>
-          <input id="group-name" class="form-control" [formControl]="groupNameInput">
+          <input id="group-name" class="form-control" [class.is-invalid]="isGroupErrorVisible" [formControl]="groupNameInput">
         </div>
         <div class="buttons-container">
           <button class="round-button" (click)="closePopover()">
@@ -26,14 +26,50 @@
     <button class="add-button" type="button" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false"
       placement="right" #popover="ngbPopover">
       <span class="material-icons">
-        add
+        group_add
       </span>
     </button>
   </div>
   <div class="groups-list">
+    <ng-template #popTitleUser>Add a user to the group!</ng-template>
+    <ng-template #popContentUser>
+      <div class="popover-container">
+        <div class="input-group">
+          <label for="group-name" style="font-weight: bold; margin-right: 10px">Email:</label>
+          <input id="group-name" class="form-control" [class.is-invalid]="isEmailErrorVisible" [formControl]="userEmailInput">
+        </div>
+        <div class="buttons-container">
+          <button class="round-button" (click)="closePopoverUser()">
+            <span class="material-icons">
+              close
+            </span>
+          </button>
+          <button class="round-button" (click)="closePopoverAndCreateUser()">
+            <span class="material-icons">
+              done
+            </span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
     <div *ngFor="let group of userGroups" class="btn-group">
       <button (click)="changeGroup(group.id)" class="button" [disabled]="group.id === groupId">
-        {{ group.name }}
+        <span>
+          {{ group.name }}
+        </span>
+        <div class="group-buttons-container" *ngIf="groupId === group.id">
+          <button class="round-button group-button">
+            <span class="material-icons" [ngbPopover]="popContentUser" [popoverTitle]="popTitleUser" [autoClose]="false"
+              container="body" #popoverUser="ngbPopover" placement="bottom">
+              person_add
+            </span>
+          </button>
+          <button class="round-button group-button">
+            <span class="material-icons" (click)="onGroupDeleted()">
+              delete
+            </span>
+          </button>
+        </div>
       </button>
     </div>
   </div>

@@ -49,4 +49,12 @@ export class MessengerComponent implements OnInit {
       value => this.userGroups$ = this.apiService.getUserGroups(this.user.id)
     );
   }
+
+  onUserAddedToGroup(event: { email: string, groupId: string }) {
+    console.log(event);
+  }
+
+  onGroupDeleted(groupId: string) {
+    console.log(groupId);
+  }
 }
