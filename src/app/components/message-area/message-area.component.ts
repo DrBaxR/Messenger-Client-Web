@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './message-area.component.html',
   styleUrls: ['./message-area.component.scss']
 })
-export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
+export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
   @Input('user') user: User;
   @Input('groupId') groupId: string;
   @Input('groupUsers') groupUsers: User[];
@@ -29,6 +29,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   initialMessagesCount: number;
   viewPrepared = false;
   endReached = false;
+  scrolledUp = false;
 
   constructor(
     private apiService: ApiService,
@@ -70,6 +71,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
             this.page = 1;
             this.endReached = false;
             this.initialMessagesCount = messages.length;
+            this.scrolledUp = false;
 
             this.connect();
           },
@@ -79,13 +81,16 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  ngAfterViewChecked() {
+    if(!this.scrolledUp) {
+      this.scrollToBottom();
+    }
+  }
+
   connect() {
     this.topicSubscription = this.rxStompService.watch(`/topic/group.${this.groupId}`).subscribe((message: Message) => {
       this.messages.push(JSON.parse(message.body));
-      // TODO: MUST FIND A BETTER WAY TO DO THIS
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 100);
+      this.scrolledUp = false;
     });
   }
 
@@ -141,5 +146,6 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
 
   onScrollUp() {
     this.extendMessagesToNextPage();
+    this.scrolledUp = true;
   }
 }

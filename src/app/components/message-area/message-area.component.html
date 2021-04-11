@@ -2,10 +2,14 @@
      style="height: 100%">
     <div #messagesArea
          class="messages"
-         ngxInfiniteScroller
-         strategy="scrollingToTop"
-         (onScrollUp)="extendMessagesToNextPage()"
-         style="height: 100%">
+         style="height: 100%;"
+         infiniteScroll
+         [scrollWindow]="false"
+         [alwaysCallback]="true"
+         [infiniteScrollDistance]="3"
+         [infiniteScrollUpDistance]="1.5"
+         [infiniteScrollThrottle]="50"
+         (scrolledUp)="onScrollUp()">
         <div *ngIf="viewPrepared">
             <div class="end-of-list">
                 <div *ngIf="initialMessagesCount >= SIZE">

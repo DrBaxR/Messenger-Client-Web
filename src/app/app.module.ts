@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './components/signin/signin.component';
@@ -54,7 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbPaginationModule,
     NgbAlertModule,
     BrowserAnimationsModule,
-    NgxInfiniteScrollerModule,
+    InfiniteScrollModule
   ],
   providers: [
     {
