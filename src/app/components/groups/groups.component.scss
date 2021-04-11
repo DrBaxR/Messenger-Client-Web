@@ -14,7 +14,7 @@
         justify-content: space-between;
 
         .title:disabled {
-            flex: 1;
+            flex: 1 1 auto;
             margin-right: 15px;
             padding: 0 10px;
             height: 40px;
@@ -54,6 +54,11 @@
                     .group-button {
                         background-color: #00250a00;
                         color: black;
+                        margin-right: 5px;
+                    }
+
+                    .group-button:hover {
+                        background-color: #44444448;
                     }
                 }
             }

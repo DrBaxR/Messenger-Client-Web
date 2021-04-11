@@ -1,11 +1,60 @@
 <div class="messenger-container">
+    <ngb-alert #successAlert
+               class="fixed-alert"
+               *ngIf="successMessage"
+               type="success"
+               (closed)="successMessage = ''"
+               [innerHTML]="successMessage">
+    </ngb-alert>
+    <ngb-alert #dangerAlert
+               class="fixed-alert"
+               *ngIf="dangerMessage"
+               type="danger"
+               (closed)="dangerMessage = ''"
+               [innerHTML]="dangerMessage">
+    </ngb-alert>
     <div class="groups-container">
-        <app-groups (newGroupEvent)="changeGroup($event)" [groupId]="groupId" [user]="user"
-            [userGroups]="userGroups$ | async" (groupCreated)="onGroupCreated($event)" (userAddedToGroup)="onUserAddedToGroup($event)" (groupDeleted)="onGroupDeleted($event)" style="height: 450px">
+        <app-groups (newGroupEvent)="changeGroup($event)"
+                    [groupId]="groupId"
+                    [user]="user"
+                    [userGroups]="userGroups$ | async"
+                    (groupCreated)="onGroupCreated($event)"
+                    (userAddedToGroup)="onUserAddedToGroup($event)"
+                    (groupDeleted)="openDeleteDialog(content, $event)"
+                    style="height: 450px">
         </app-groups>
     </div>
     <div class="messages-container">
-        <app-message-area class="messages" [groupId]="groupId" [groupUsers]="groupUsers$ | async" [user]="user">
+        <app-message-area class="messages"
+                          [groupId]="groupId"
+                          [groupUsers]="groupUsers$ | async"
+                          [user]="user"
+                          (groupDeletedError)="onGroupDeletedError($event)">
         </app-message-area>
     </div>
 </div>
+<ng-template #content
+             let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title"
+            id="modal-basic-title">Are you sure?</h4>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        You are about to <b>delete the selected group</b>. This action is <b>can't be undone</b>. Are you sure you want to proceed?
+    </div>
+    <div class="modal-footer">
+        <button type="button"
+                class="btn btn-outline-success"
+                (click)="modal.close('OK')">I'm Sure</button>
+        <button type="button"
+                class="btn btn-danger"
+                ngbAutofocus
+                (click)="modal.close('NO')">Cancel</button>
+    </div>
+</ng-template>

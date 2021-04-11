@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
@@ -17,6 +17,8 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   @Input('groupId') groupId: string;
   @Input('groupUsers') groupUsers: User[];
 
+  @Output() groupDeletedError: EventEmitter<string> = new EventEmitter();
+
   @ViewChild('messagesArea') messagesContainer: ElementRef;
 
   messages: AppMessage[] = [];
@@ -24,6 +26,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
   messageInput: FormControl;
   page: number = 0;
   SIZE: number = 20;
+  initialMessagesCount: number;
   viewPrepared = false;
   endReached = false;
 
@@ -40,6 +43,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
         this.messages = messages;
         this.messages.reverse();
         this.page = 1;
+        this.initialMessagesCount = messages.length;
 
         this.connect();
       });
@@ -58,14 +62,19 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges {
         if (this.topicSubscription) {
           this.topicSubscription.unsubscribe();
         }
-        this.apiService.getGroupMessages(this.groupId).subscribe(messages => {
-          this.messages = messages;
-          this.messages.reverse();
-          this.page = 1;
-          this.endReached = false;
 
-          this.connect();
-        });
+        this.apiService.getGroupMessages(this.groupId).subscribe(
+          messages => {
+            this.messages = messages;
+            this.messages.reverse();
+            this.page = 1;
+            this.endReached = false;
+            this.initialMessagesCount = messages.length;
+
+            this.connect();
+          },
+          () => this.groupDeletedError.emit('This group does not exist, it probably was <b>deleted by another user</b>. Please refresh your page!')
+        );
       }
     }
   }

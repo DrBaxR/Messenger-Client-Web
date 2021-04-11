@@ -1,3 +1,4 @@
 {
-    "angular.log": "verbose"
+    "angular.log": "verbose",
+    "html.format.wrapAttributes": "force-aligned"
 }
