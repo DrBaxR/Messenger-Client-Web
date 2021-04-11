@@ -20,6 +20,9 @@
                         <button type="submit" class="btn btn-primary" (click)="validateForm()" [disabled]="signinForm.invalid">
                             Sign In
                         </button>
+                            <div *ngIf="!flag" class="alert alert-warning" role="alert">
+                                Your username or password is invalid. 
+                            </div>
                     </form>
                 </div>
             </div>
