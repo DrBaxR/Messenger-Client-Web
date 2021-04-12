@@ -1,3 +1,21 @@
+.signup-container{
+    position: relative;
+    height: 100%;
+    background-color: seagreen ;
+    background-image: linear-gradient(#1B4744, #061700, #39C676);
+}
 .container{
     padding-top: 100px;
+    width: 700px;
+    .signup-form{
+        font-family: Arial, Helvetica, sans-serif;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        //box-shadow: rgba(0, 0, 0, 0.5) 15px 10px 20px;
+        box-shadow: 0 10px 20px 5px #00250a;
+
+        border-radius: 20px;
+        background-image: linear-gradient(180deg, #39C676 20%, #E4F2D5 10%);
+        
+    }
 }
