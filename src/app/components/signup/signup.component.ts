@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class SignupComponent implements OnInit {
   
   submitted = false;
+  icon = '<span class="material-icons"style="font-size: 30px;">account_circle</span>'
 
   signupForm: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),

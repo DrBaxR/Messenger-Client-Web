@@ -1,72 +1,79 @@
 <div class="signup-container">
     <div class="container">
         <div class="signup-form">
-        <div id="signup-row" class="row justify-content-center align-items-center">
-                <div id="signup-column" class="col-md-12">
-                    <div id="signup-box" class="col-md-12">
-                        
-                    <h1 class="display-5 py-2 text-truncate">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-                          </svg>
-                        Hi! You have to create an account</h1> 
-                    
-                    <div class="px-2">
-                        <form [formGroup]="signupForm" (ngSubmit) = "onSubmit()">
-                            <div class="form-group">
-                                <label for="usernameImput">Username*</label>
-                                <input 
-                                    formControlName="username"
-                                    type="email" 
-                                    class="form-control"
-                                    id="usernameImput"
-                                    placeholder="Enter username" 
-                                    required>
-                                <div *ngIf="submitted && username.invalid" class="alert alert-danger">Username is required</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="emailInput">Email address*</label>
-                                <input 
-                                    formControlName="email" 
-                                    type="email" 
-                                    class="form-control" 
-                                    id="emailInput" 
-                                    placeholder="Enter email"
-                                    required>
-                                <div *ngIf="submitted  && email.invalid" class="alert alert-danger">
-                                    <div *ngIf="email.errors.required"> Email is required</div>
-                                    <div *ngIf="email.errors.email"> Email is not correct</div>
+            <div id="signup-row"
+                 class="row justify-content-center align-items-center">
+                <div id="signup-column"
+                     class="col-md-12">
+                    <div id="signup-box"
+                         class="col-md-12">
+                        <h1 class="display-5 py-2 text-truncate title-container">
+                            <input disabled
+                                   [value]="'Create Account Here!'"
+                                   class="title-text">
+                            <span class="material-icons"
+                                  style="font-size: 45px; padding-right: 20px">
+                                account_circle
+                            </span>
+                        </h1>
+                        <div class="px-2">
+                            <form [formGroup]="signupForm"
+                                  (ngSubmit)="onSubmit()">
+                                <div class="form-group">
+                                    <label for="usernameImput">Username*</label>
+                                    <input formControlName="username"
+                                           type="email"
+                                           class="form-control inset-shadow"
+                                           id="usernameImput"
+                                           placeholder="Enter username"
+                                           required>
+                                    <div *ngIf="submitted && username.invalid"
+                                         class="alert alert-danger">Username is required</div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="passwordInput">Password*</label>
-                                <input 
-                                    formControlName="password" 
-                                    type="password" 
-                                    class="form-control" 
-                                    id="passwordInput"
-                                    placeholder="Password"
-                                    required>
-                                <div *ngIf="submitted  && password.invalid" class="alert alert-danger">
-                                    <div *ngIf="password.errors.required">You have to set a password</div>
-                                    <div *ngIf="password.errors.minlength">Password should have more than {{ password.errors.minlength.requiredLength }} characters</div>
+                                <div class="form-group">
+                                    <label for="emailInput">Email address*</label>
+                                    <input formControlName="email"
+                                           type="email"
+                                           class="form-control inset-shadow"
+                                           id="emailInput"
+                                           placeholder="Enter email"
+                                           required>
+                                    <div *ngIf="submitted  && email.invalid"
+                                         class="alert alert-danger">
+                                        <div *ngIf="email.errors.required"> Email is required</div>
+                                        <div *ngIf="email.errors.email"> Email is not correct</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div>
-                                    <small>Already have an account? <a [routerLink]="['/signin']">Sign in</a></small>
+                                <div class="form-group">
+                                    <label for="passwordInput">Password*</label>
+                                    <input formControlName="password"
+                                           type="password"
+                                           class="form-control inset-shadow"
+                                           id="passwordInput"
+                                           placeholder="Password"
+                                           required>
+                                    <div *ngIf="submitted  && password.invalid"
+                                         class="alert alert-danger">
+                                        <div *ngIf="password.errors.required">You have to set a password</div>
+                                        <div *ngIf="password.errors.minlength">Password should have more than {{
+                                            password.errors.minlength.requiredLength }} characters</div>
+                                    </div>
                                 </div>
-                                <button 
-                                    type="submit" 
-                                    class="btn btn-primary" 
-                                    >
-                                    Sign Up
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                                <div style="text-align: center;">
+                                    <div>
+                                        <small>Already have an account? <a [routerLink]="['/signin']">Sign
+                                                in</a></small>
+                                    </div>
+                                    <button type="submit"
+                                            class="btn btn-primary"
+                                            style="background-color: #1a6640; border: 0;">
+                                        Sign Up
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>

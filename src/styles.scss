@@ -8,3 +8,7 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.inset-shadow {
+    box-shadow: inset 0 0 4px #424242;
+}
