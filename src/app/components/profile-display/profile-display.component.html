@@ -1,32 +1,70 @@
-<div class="details">
-    <!-- <p>
-        User ID: {{ user?.id }}
-    </p> -->
-    <!-- <p>
-        Username: {{ user?.username }}
-    </p> -->
+<div class="details-container">
+    <div class="container">
+        <div class="user-details">
+            <div id="profile-row" class="row justify-content-center align-items-center">
+                <div id="profile-column" class="col-md-10">
+                    <div id="profile-box" class="col-md-12">
+                        <h1>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                              </svg>
+                            Profile Page
+                        </h1>
+                        <ngb-alert #successAlert
+                        class="fixed-alert"
+                        *ngIf="successMessage"
+                        type="success"
+                        (closed)="successMessage = ''"
+                        [innerHTML]="successMessage">
+                        </ngb-alert>
+                            <div class="form-group">
+                                <label for="username">User ID</label>
+                                <div class="input-group-text">
+                                    <input
+                                        #id="ngModel" 
+                                        [(ngModel)]="user.id" 
+                                        name="id" id="id" 
+                                        type="text" 
+                                        class="form-control" 
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Email</label>
+                                <div class="input-group-text">
+                                    <input 
+                                        #email="ngModel" 
+                                        [(ngModel)]="user.email" 
+                                        name="email" 
+                                        id="email" 
+                                        type="text" 
+                                        class="form-control" 
+                                        disabled>
+                                </div>
+                            </div>
 
-    <!-- <p>
-        User email: {{ user?.email }}
-    </p> -->
-        <div class="form-group">
-            <label for="username">User ID</label>
-            <div class="input-group-text">
-                <input #id="ngModel" [(ngModel)]="user.id" name="id" id="id" type="text" class="form-control" disabled>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <div class="input-group-text">
+                                    <input 
+                                        #username="ngModel" 
+                                        [(ngModel)]="user.username" 
+                                        name="username" 
+                                        id="username" 
+                                        type="text" 
+                                        class="form-control">
+                                </div>
+                            </div>
+                        <div style="text-align: center;">
+                            <button 
+                                type="button" 
+                                class="btn btn-primary" 
+                                (click)="saveProfile(username.value)">Update profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="username">Email</label>
-            <div class="input-group-text">
-                <input #email="ngModel" [(ngModel)]="user.email" name="email" id="email" type="text" class="form-control" disabled>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="username">Username</label>
-            <div class="input-group-text">
-                <input #username="ngModel" [(ngModel)]="user.username" name="username" id="username" type="text" class="form-control">
-            </div>
-        </div>
-        <button type="button" class="btn btn-primary" (click)="saveProfile(username.value)">Save profile</button>
+    </div>
 </div>
