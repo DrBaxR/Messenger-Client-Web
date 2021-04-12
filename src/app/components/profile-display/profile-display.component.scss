@@ -1,0 +1,21 @@
+.details-container{
+        // position: relative;
+        // font-family: Arial, Helvetica, sans-serif;
+        // padding-top: 20px;
+        // padding-bottom: 20px;
+        // background-color: rgba(202, 189, 189, 0.6);
+        // box-shadow: rgba(0, 0, 0, 0.5) 15px 10px 20px;
+        // border-radius: 20px;    
+    .container{
+        width: 900px;
+        .user-details{
+            font-family: Arial, Helvetica, sans-serif;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background-color: rgba(202, 189, 189, 0.7);
+            box-shadow: rgba(0, 0, 0, 0.5) 15px 10px 20px;
+            border-radius: 20px;
+            font-size: large;
+        }
+    }
+}

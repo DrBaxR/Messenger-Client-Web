@@ -136,6 +136,28 @@ export class ApiService {
     }
   }
 
+  updateUser(userId: string, username: string){
+    const body = {
+      username
+    }
+    //console.log(username);
+
+    const observable = this.httpClient.put<User>(`${this.apiUrl}/users/${userId}`, body, 
+      {
+        headers: {
+          'Authorization': `Bearer ${this.getJwt()}`
+        }
+      }
+    );
+
+    observable.subscribe(user => {
+      this.loggedUser$.next(user);
+      localStorage.setItem('user', JSON.stringify(user));
+    });
+    
+    return observable;
+  }
+  
   createUserGroup(userId: string, group: Group) {
     return this.httpClient.post<Group>(`${this.apiUrl}/users/${userId}/groups`, group, {
       headers: {
