@@ -4,6 +4,25 @@
            disabled
            [value]="user?.username + '\'s groups'">
 
+    <ng-template #popTitleMem>Group members</ng-template>
+    <ng-template #popContentMem>
+      <div class="popover-container">
+        <div class="members-container">
+          <div class="member" *ngFor="let mem of selectedGroupUsers">
+            {{ mem.username }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <button class="add-button">
+      <span class="material-icons"
+            type="button"
+            [ngbPopover]="popContentMem"
+            [popoverTitle]="popTitleMem"
+            placement="top">
+        visibility
+      </span>
+    </button>
     <ng-template #popTitle>Create a new group!</ng-template>
     <ng-template #popContent>
       <div class="popover-container">

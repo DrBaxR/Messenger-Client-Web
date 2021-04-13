@@ -28,6 +28,8 @@ export class GroupsComponent implements OnInit, OnChanges {
   userEmailInput: FormControl;
   isEmailErrorVisible = false;
 
+  selectedGroupUsers: User[] = [];
+
   constructor(
     private apiService: ApiService
   ) { }
@@ -42,6 +44,10 @@ export class GroupsComponent implements OnInit, OnChanges {
       if (this.userGroups) {
         this.newGroupEvent.emit(this.userGroups[0].id);
       }
+    }
+
+    if (changes.groupId) {
+      this.apiService.getGroupUsers(this.groupId).subscribe(users => this.selectedGroupUsers = users);
     }
   }
 

@@ -1,3 +1,11 @@
 <div class="profile-container">
-    <app-profile-display [user]="loggedUser$ | async"></app-profile-display>
+    <ngb-alert #successAlert
+               class="fixed-alert"
+               *ngIf="successMessage"
+               type="success"
+               (closed)="successMessage = ''"
+               [innerHTML]="successMessage">
+    </ngb-alert>
+    <app-profile-display [user]="loggedUser$ | async"
+                         (usernameChanged)="onUsernameChanged($event)"></app-profile-display>
 </div>

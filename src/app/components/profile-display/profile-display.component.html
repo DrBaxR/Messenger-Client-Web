@@ -1,10 +1,3 @@
-<ngb-alert #successAlert
-           class="fixed-alert"
-           *ngIf="successMessage"
-           type="success"
-           (closed)="successMessage = ''"
-           [innerHTML]="successMessage">
-</ngb-alert>
 <div class="details-container">
     <div class="container">
         <div class="user-details">
@@ -12,61 +5,51 @@
                  class="row justify-content-center align-items-center">
                 <div id="profile-column"
                      class="col-md-10">
-                    <div id="profile-box"
-                         class="col-md-12">
-                        <h1 class="title-container">
-                            <input disabled
-                                   [value]="'Profile Page'"
-                                   class="title-text">
-                            <span class="material-icons"
-                                  style="font-size: 40px;">
-                                account_box
-                            </span>
-                        </h1>
-
-                        <div class="form-group">
-                            <label for="username">User ID</label>
-                            <div class="input-group-text">
-                                <input #id="ngModel"
-                                       [(ngModel)]="user.id"
-                                       name="id"
-                                       id="id"
-                                       type="text"
-                                       class="form-control"
-                                       disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Email</label>
-                            <div class="input-group-text">
-                                <input #email="ngModel"
-                                       [(ngModel)]="user.email"
-                                       name="email"
-                                       id="email"
-                                       type="text"
-                                       class="form-control"
-                                       disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <div class="input-group-text">
-                                <input #username="ngModel"
-                                       [(ngModel)]="user.username"
-                                       name="username"
-                                       id="username"
-                                       type="text"
-                                       class="form-control">
-                            </div>
-                        </div>
-                        <div style="text-align: center;">
-                            <button type="button"
-                                    class="btn btn-primary"
-                                    (click)="saveProfile(username.value)"
-                                    style="background-color: #1a6640; border: 0;">Update profile
-                            </button>
-                        </div>
+                    <h1 class="title-container">
+                        <input disabled
+                               [value]="'Profile Page'"
+                               class="title-text">
+                    </h1>
+                    <div class="user-icon inset-shadow">
+                        <span>
+                            {{ user?.username[0] }}
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">User ID</label>
+                        <input #id="ngModel"
+                               [(ngModel)]="user.id"
+                               name="id"
+                               id="id"
+                               type="text"
+                               class="form-control inset-shadow"
+                               disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input #email="ngModel"
+                               [(ngModel)]="user.email"
+                               name="email"
+                               id="email"
+                               type="text"
+                               class="form-control inset-shadow"
+                               disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input #username="ngModel"
+                               [(ngModel)]="user.username"
+                               name="username"
+                               id="username"
+                               type="text"
+                               class="form-control inset-shadow">
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="button"
+                                class="btn btn-primary"
+                                (click)="saveProfile(username.value)"
+                                style="background-color: #1a6640; border: 0;">Update profile
+                        </button>
                     </div>
                 </div>
             </div>
