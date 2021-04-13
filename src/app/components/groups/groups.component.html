@@ -9,7 +9,7 @@
       <div class="popover-container">
         <div class="members-container">
           <div class="member" *ngFor="let mem of selectedGroupUsers">
-            {{ mem.username }}
+            <a [routerLink]="['/profile', mem.id]">{{ mem.username }}</a>
           </div>
         </div>
       </div>

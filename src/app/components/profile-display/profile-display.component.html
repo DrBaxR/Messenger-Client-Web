@@ -1,4 +1,4 @@
-<div class="details-container">
+<div *ngIf="user && !otherUser" class="details-container">
     <div class="container">
         <div class="user-details">
             <div id="profile-row"
@@ -51,6 +51,61 @@
                                 style="background-color: #1a6640; border: 0;">Update profile
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="otherUser" class="details-container">
+    <div class="container">
+        <div class="user-details">
+            <div id="profile-row"
+                 class="row justify-content-center align-items-center">
+                <div id="profile-column"
+                     class="col-md-10">
+                    <h1 class="title-container">
+                        <input disabled
+                               [value]="'Profile Page'"
+                               class="title-text">
+                    </h1>
+                    <div class="user-icon inset-shadow">
+                        <span>
+                            {{ otherUser?.username[0] }}
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">User ID</label>
+                        <input #id="ngModel"
+                               [(ngModel)]="otherUser.id"
+                               name="id"
+                               id="id"
+                               type="text"
+                               class="form-control inset-shadow"
+                               disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input #email="ngModel"
+                               [(ngModel)]="otherUser.email"
+                               name="email"
+                               id="email"
+                               type="text"
+                               class="form-control inset-shadow"
+                               disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input #username="ngModel"
+                               [(ngModel)]="otherUser.username"
+                               name="username"
+                               id="username"
+                               type="text"
+                               class="form-control inset-shadow"
+                               disabled>
+                    </div>
+                    
                 </div>
             </div>
         </div>

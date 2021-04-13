@@ -7,5 +7,6 @@
                [innerHTML]="successMessage">
     </ngb-alert>
     <app-profile-display [user]="loggedUser$ | async"
+                         [otherUser]="userProfile"
                          (usernameChanged)="onUsernameChanged($event)"></app-profile-display>
 </div>

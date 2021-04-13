@@ -20,6 +20,16 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getUser(id: string)
+  {
+    return this.httpClient.get<User>(`${this.apiUrl}/users/${id}`,
+    {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    })
+  }
+
   getGroups() {
     return this.httpClient.get(`${this.apiUrl}/groups`,
       {

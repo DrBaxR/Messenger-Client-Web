@@ -33,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GroupsComponent,
     ProfileDisplayComponent,
     MessengerComponent,
-    MessageAreaComponent
+    MessageAreaComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +44,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'signin', component: SigninComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'profile/:id', component: ProfileComponent },
       { path: 'messenger', component: MessengerComponent }
     ]),
     HttpClientModule,

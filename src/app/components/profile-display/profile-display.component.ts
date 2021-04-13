@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ProfileDisplayComponent implements OnInit {
   @Input('user') user: User;
-
+  @Input('otherUser') otherUser: User; 
   @Output() usernameChanged: EventEmitter<string> = new EventEmitter();
 
   username: string;
