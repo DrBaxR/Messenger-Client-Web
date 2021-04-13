@@ -1,11 +1,20 @@
 .background-container {
     background-color: #00250a;
     height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
+    .fixed-alert{
+        margin-bottom: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    
     .signin-container {
         padding: 20px;
         border-radius: 20px;
@@ -54,6 +63,7 @@
 .alert-warning {
     opacity: 70%;
 }
+
 
 .box-shadow {
     box-shadow: 3px 10px 10px black;

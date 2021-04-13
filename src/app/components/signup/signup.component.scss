@@ -2,9 +2,18 @@
     position: relative;
     height: 100%;
     background-color: #00250a;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    .fixed-alert{
+        position: absolute;
+        margin-bottom: 0px;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
 
     .title-container {
         display: flex;
@@ -38,3 +47,4 @@
         border-radius: 20px;
     }
 }
+
