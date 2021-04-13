@@ -1,4 +1,18 @@
 <div class="signup-container">
+    <ngb-alert #successAlert
+               class="fixed-alert"
+               *ngIf="successMessage"
+               type="success"
+               (closed)="successMessage = ''"
+               [innerHTML]="successMessage">
+    </ngb-alert>
+    <ngb-alert #dangerAlert
+               class="fixed-alert"
+               *ngIf="dangerMessage"
+               type="danger"
+               (closed)="dangerMessage = ''"
+               [innerHTML]="dangerMessage">
+    </ngb-alert>
     <div class="container">
         <div class="signup-form">
             <div id="signup-row"

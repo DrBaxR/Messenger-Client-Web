@@ -1,4 +1,11 @@
 <div class="background-container">
+    <ngb-alert #dangerAlert
+               class="fixed-alert"
+               *ngIf="dangerMessage"
+               type="danger"
+               (closed)="dangerMessage = ''"
+               [innerHTML]="dangerMessage">
+    </ngb-alert>
     <div class="signin-container box-shadow">
         <h1 class="display-5 py-2 text-truncate">
             <input class="title-text"
@@ -32,11 +39,6 @@
                     [disabled]="signinForm.invalid">
                 Sign In
             </button>
-            <div *ngIf="!flag"
-                 class="alert alert-warning"
-                 role="alert">
-                Your username or password is invalid.
-            </div>
         </form>
     </div>
 </div>

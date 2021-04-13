@@ -1,3 +1,10 @@
+<ngb-alert #successAlert
+           class="fixed-alert"
+           *ngIf="successMessage"
+           type="success"
+           (closed)="successMessage = ''"
+           [innerHTML]="successMessage">
+</ngb-alert>
 <div class="details-container">
     <div class="container">
         <div class="user-details">
@@ -7,19 +14,16 @@
                      class="col-md-10">
                     <div id="profile-box"
                          class="col-md-12">
-                        <h1>
-                            <span class="material-icons" style="font-size: 40px;">
+                        <h1 class="title-container">
+                            <input disabled
+                                   [value]="'Profile Page'"
+                                   class="title-text">
+                            <span class="material-icons"
+                                  style="font-size: 40px;">
                                 account_box
                             </span>
-                            Profile Page
                         </h1>
-                        <ngb-alert #successAlert
-                                   class="fixed-alert"
-                                   *ngIf="successMessage"
-                                   type="success"
-                                   (closed)="successMessage = ''"
-                                   [innerHTML]="successMessage">
-                        </ngb-alert>
+
                         <div class="form-group">
                             <label for="username">User ID</label>
                             <div class="input-group-text">
@@ -59,7 +63,8 @@
                         <div style="text-align: center;">
                             <button type="button"
                                     class="btn btn-primary"
-                                    (click)="saveProfile(username.value)">Update profile
+                                    (click)="saveProfile(username.value)"
+                                    style="background-color: #1a6640; border: 0;">Update profile
                             </button>
                         </div>
                     </div>
