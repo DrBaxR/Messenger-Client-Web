@@ -47,7 +47,9 @@ import { PasswordResetComponent } from './components/password-reset/password-res
       { path: 'signup', component: SignupComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'messenger', component: MessengerComponent },
-      { path: 'reset-password/:id', component: PasswordResetComponent }
+      { path: 'reset-password/:id', component: PasswordResetComponent },
+      { path: 'profile/:id', component: ProfileComponent },
+      { path: 'messenger', component: MessengerComponent }
     ]),
     HttpClientModule,
     ReactiveFormsModule,
