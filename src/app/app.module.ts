@@ -21,6 +21,7 @@ import { MessageAreaComponent } from './components/message-area/message-area.com
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { rxStompConfig } from './configs/rx-stomp-config';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GroupsComponent,
     ProfileDisplayComponent,
     MessengerComponent,
-    MessageAreaComponent
+    MessageAreaComponent,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'signin', component: SigninComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'messenger', component: MessengerComponent }
+      { path: 'messenger', component: MessengerComponent },
+      { path: 'reset-password/:id', component: PasswordResetComponent }
     ]),
     HttpClientModule,
     ReactiveFormsModule,

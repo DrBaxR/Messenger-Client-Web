@@ -82,7 +82,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
   }
 
   ngAfterViewChecked() {
-    if(!this.scrolledUp) {
+    if (!this.scrolledUp) {
       this.scrollToBottom();
     }
   }
@@ -95,16 +95,18 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
   }
 
   sendMessage(text: string) {
-    const message = {
-      text: text,
-      sender: this.user.id,
-      date: new Date().toISOString()
-    }
+    if (text.length > 0) {
+      const message = {
+        text: text,
+        sender: this.user.id,
+        date: new Date().toISOString()
+      }
 
-    this.rxStompService.publish({
-      destination: `/ws/group.chat/${this.groupId}`,
-      body: JSON.stringify(message)
-    });
+      this.rxStompService.publish({
+        destination: `/ws/group.chat/${this.groupId}`,
+        body: JSON.stringify(message)
+      });
+    }
   }
 
   ngOnDestroy() {

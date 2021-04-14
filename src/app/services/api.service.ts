@@ -10,7 +10,6 @@ import { User } from '../data-models/user';
 })
 export class ApiService {
   apiUrl = 'http://localhost:8080';
-  websocketUrl = 'ws://localhost:8080/messenger';
 
   jwt: string = null;
   userId: string = '';
@@ -92,7 +91,6 @@ export class ApiService {
 
           this.loggedUser = u;
 
-          // new
           this.loggedUser$.next(u);
           localStorage.setItem('user', JSON.stringify(this.loggedUser));
         })
