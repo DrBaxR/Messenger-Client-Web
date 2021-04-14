@@ -22,6 +22,7 @@ import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '
 import { rxStompConfig } from './configs/rx-stomp-config';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordForgotComponent } from './components/password-forgot/password-forgot.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PasswordResetComponent } from './components/password-reset/password-res
     ProfileDisplayComponent,
     MessengerComponent,
     MessageAreaComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    PasswordForgotComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { PasswordResetComponent } from './components/password-reset/password-res
       { path: 'messenger', component: MessengerComponent },
       { path: 'reset-password/:id', component: PasswordResetComponent },
       { path: 'profile/:id', component: ProfileComponent },
-      { path: 'messenger', component: MessengerComponent }
+      { path: 'messenger', component: MessengerComponent },
+      { path: 'forgot', component: PasswordForgotComponent }
     ]),
     HttpClientModule,
     ReactiveFormsModule,

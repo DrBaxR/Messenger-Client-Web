@@ -30,7 +30,12 @@
                        placeholder="Password">
             </div>
             <div class="prompt">
-                <small>Don't have an account? <a [routerLink]="['/signup']">Sign Up</a></small>
+                <div>
+                    <small>Don't have an account? <a [routerLink]="['/signup']">Sign Up</a></small>
+                </div>
+                <div>
+                    <small>Forgot your password? <a [routerLink]="['/forgot']">Click here!</a></small>
+                </div>
             </div>
             <button type="submit"
                     class="btn btn-primary"

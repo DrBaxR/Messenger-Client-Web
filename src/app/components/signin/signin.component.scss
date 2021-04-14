@@ -68,3 +68,11 @@
 .box-shadow {
     box-shadow: 3px 10px 10px black;
 }
+
+.prompt {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 5px;
+}

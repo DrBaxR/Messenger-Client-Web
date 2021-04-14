@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AppMessage } from '../data-models/app-message';
 import { Group } from '../data-models/group';
+import { PasswordReset } from '../data-models/password-reset';
 import { User } from '../data-models/user';
 
 @Injectable({
@@ -19,14 +20,13 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getUser(id: string)
-  {
+  getUser(id: string) {
     return this.httpClient.get<User>(`${this.apiUrl}/users/${id}`,
-    {
-      headers: {
-        'Authorization': `Bearer ${this.getJwt()}`
-      }
-    })
+      {
+        headers: {
+          'Authorization': `Bearer ${this.getJwt()}`
+        }
+      })
   }
 
   getGroups() {
@@ -144,13 +144,13 @@ export class ApiService {
     }
   }
 
-  updateUser(userId: string, username: string){
+  updateUser(userId: string, username: string) {
     const body = {
       username
     }
     //console.log(username);
 
-    const observable = this.httpClient.put<User>(`${this.apiUrl}/users/${userId}`, body, 
+    const observable = this.httpClient.put<User>(`${this.apiUrl}/users/${userId}`, body,
       {
         headers: {
           'Authorization': `Bearer ${this.getJwt()}`
@@ -162,10 +162,10 @@ export class ApiService {
       this.loggedUser$.next(user);
       localStorage.setItem('user', JSON.stringify(user));
     });
-    
+
     return observable;
   }
-  
+
   createUserGroup(userId: string, group: Group) {
     return this.httpClient.post<Group>(`${this.apiUrl}/users/${userId}/groups`, group, {
       headers: {
@@ -188,5 +188,29 @@ export class ApiService {
         'Authorization': `Bearer ${this.getJwt()}`
       }
     });
+  }
+
+  getPasswordReset(id: string) {
+    return this.httpClient.get<PasswordReset>(`${this.apiUrl}/resets/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    });
+  }
+
+  updatePassword(id: string, newPassword: string) {
+    return this.httpClient.put(`${this.apiUrl}/users/reset-password/${id}`, newPassword, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    });
+  }
+
+  sendForgotPasswordEmail(email: string) {
+    return this.httpClient.get(`${this.apiUrl}/users/${email}/forgot-password`, {
+      headers: {
+        'Authorization': `Bearer ${this.getJwt()}`
+      }
+    })
   }
 }
