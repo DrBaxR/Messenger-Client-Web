@@ -72,7 +72,6 @@ export class SignupComponent implements OnInit {
     }
 
     this.validateForm();
-    console.log("ana");
     this.router.navigate(['/signin']);
       
   }
