@@ -14,8 +14,12 @@ export class PasswordForgotComponent implements OnInit {
   @ViewChild('successAlert') successAlert: NgbAlert;
   @ViewChild('dangerAlert') dangerAlert: NgbAlert;
 
-  emailInput: FormControl = new FormControl('', Validators.required);
+  emailInput: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
 
+  submitted = false;
   successMessage: string = '';
   dangerMessage: string = '';
 
@@ -36,6 +40,7 @@ export class PasswordForgotComponent implements OnInit {
   }
 
   sendEmail() {
+    this.submitted = true;
     if(this.emailInput.valid) {
       this.apiService.sendForgotPasswordEmail(this.emailInput.value).subscribe({
         error: error => {

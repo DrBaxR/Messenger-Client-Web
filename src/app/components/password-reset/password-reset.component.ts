@@ -10,10 +10,17 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./password-reset.component.scss']
 })
 export class PasswordResetComponent implements OnInit {
+
+  submitted = false;
   resetId: string;
   resetPassword: PasswordReset = null;
-  passwordInput: FormControl = new FormControl('', Validators.required);
-  confirmPasswordInput: FormControl = new FormControl('', Validators.required);
+
+  passwordInput: FormControl = new FormControl('', [
+    Validators.required, Validators.minLength(4)
+  ]);
+  confirmPasswordInput: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4)]);
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +35,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   updatePassword() {
+    this.submitted = true;
     if(this.passwordInput.valid && this.passwordInput.value === this.confirmPasswordInput.value) {
       this.apiService.updatePassword(this.resetId, this.passwordInput.value)
         .subscribe(() => this.router.navigate(['/signin']));
