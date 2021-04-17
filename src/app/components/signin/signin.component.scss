@@ -45,6 +45,10 @@
 
             .form-group {
                 width: 100%;
+
+                label {
+                    font-weight: bold;
+                }
             }
         }
     }
@@ -63,7 +67,6 @@
 .alert-warning {
     opacity: 70%;
 }
-
 
 .box-shadow {
     box-shadow: 3px 10px 10px black;

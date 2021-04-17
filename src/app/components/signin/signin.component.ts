@@ -34,6 +34,11 @@ export class SigninComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('user')) {
+      this.router.navigate(['/messenger']);
+    }
+    // console.log(localStorage.getItem('user'));
+
     this._danger.subscribe(message => this.dangerMessage = message);
     this._danger.pipe(debounceTime(this.alertTimeout)).subscribe(() => this.dangerAlert?.close());
   }
