@@ -23,6 +23,7 @@ import { rxStompConfig } from './configs/rx-stomp-config';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { PasswordForgotComponent } from './components/password-forgot/password-forgot.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -47,11 +48,11 @@ import { PasswordForgotComponent } from './components/password-forgot/password-f
       { path: '', redirectTo: '/signin', pathMatch: 'full' },
       { path: 'signin', component: SigninComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'messenger', component: MessengerComponent },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'messenger', component: MessengerComponent, canActivate: [AuthGuard] },
       { path: 'reset-password/:id', component: PasswordResetComponent },
-      { path: 'profile/:id', component: ProfileComponent },
-      { path: 'messenger', component: MessengerComponent },
+      { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
+      // { path: 'messenger', component: MessengerComponent },
       { path: 'forgot', component: PasswordForgotComponent }
     ]),
     HttpClientModule,
@@ -71,7 +72,9 @@ import { PasswordForgotComponent } from './components/password-forgot/password-f
       provide: RxStompService,
       useFactory: rxStompServiceFactory,
       deps: [InjectableRxStompConfig],
-    },],
+    },
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
