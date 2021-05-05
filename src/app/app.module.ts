@@ -52,7 +52,6 @@ import { AuthGuard } from './services/auth-guard.service';
       { path: 'messenger', component: MessengerComponent, canActivate: [AuthGuard] },
       { path: 'reset-password/:id', component: PasswordResetComponent },
       { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
-      // { path: 'messenger', component: MessengerComponent },
       { path: 'forgot', component: PasswordForgotComponent }
     ]),
     HttpClientModule,
