@@ -25,11 +25,12 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
   topicSubscription: Subscription = null;
   messageInput: FormControl;
   page: number = 0;
-  SIZE: number = 20;
+  SIZE: number = 30;
   initialMessagesCount: number;
   viewPrepared = false;
   endReached = false;
   scrolledUp = false;
+  finishedFetching = true;
 
   constructor(
     private apiService: ApiService,
@@ -127,6 +128,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
 
   extendMessagesToNextPage() {
     if (!this.endReached) {
+      this.finishedFetching = false;
       this.apiService.getGroupMessages(this.groupId, this.page, this.SIZE).subscribe(newMessages => {
         if (newMessages.length >= this.SIZE) {
           this.messages.reverse();
@@ -136,6 +138,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
         } else {
           this.endReached = true;
         }
+        this.finishedFetching = true;
       })
     }
   }
@@ -147,7 +150,9 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
   }
 
   onScrollUp() {
-    this.extendMessagesToNextPage();
-    this.scrolledUp = true;
+    if (this.finishedFetching) {
+      this.extendMessagesToNextPage();
+      this.scrolledUp = true;
+    }
   }
 }

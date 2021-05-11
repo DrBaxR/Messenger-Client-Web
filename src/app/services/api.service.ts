@@ -10,6 +10,7 @@ import { User } from '../data-models/user';
   providedIn: 'root'
 })
 export class ApiService {
+  // apiUrl = 'https://messenger-server-pkfomy4bva-lm.a.run.app';
   apiUrl = 'http://localhost:8080';
 
   jwt: string = null;
@@ -118,7 +119,7 @@ export class ApiService {
       password
     }
 
-    return this.httpClient.post(`${this.apiUrl}/api/auth/signup`, body);
+    return this.httpClient.post(`${this.apiUrl}/api/auth/signup`, body, { observe: 'response' });
   }
 
   logout() {
