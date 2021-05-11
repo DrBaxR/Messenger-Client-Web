@@ -8,7 +8,8 @@
     <ng-template #popContentMem>
       <div class="popover-container">
         <div class="members-container">
-          <div class="member" *ngFor="let mem of selectedGroupUsers">
+          <div class="member"
+               *ngFor="let mem of selectedGroupUsers">
             <a [routerLink]="['/profile', mem.id]">{{ mem.username }}</a>
           </div>
         </div>
@@ -90,35 +91,43 @@
         </div>
       </div>
     </ng-template>
-    <div *ngFor="let group of userGroups"
-         class="btn-group">
-      <button (click)="changeGroup(group.id)"
-              class="button"
-              [disabled]="group.id === groupId">
-        <span>
-          {{ group.name }}
-        </span>
-        <div class="group-buttons-container"
-             *ngIf="groupId === group.id">
-          <button class="round-button group-button">
-            <span class="material-icons"
-                  [ngbPopover]="popContentUser"
-                  [popoverTitle]="popTitleUser"
-                  [autoClose]="false"
-                  container="body"
-                  #popoverUser="ngbPopover"
-                  placement="bottom">
-              person_add
-            </span>
-          </button>
-          <button class="round-button group-button">
-            <span class="material-icons"
-                  (click)="onGroupDeleted()">
-              delete
-            </span>
-          </button>
-        </div>
-      </button>
-    </div>
+    <ng-container *ngIf="userGroups?.length > 0; else noGroups">
+      <div *ngFor="let group of userGroups"
+           class="btn-group">
+        <button (click)="changeGroup(group.id)"
+                class="button"
+                [disabled]="group.id === groupId">
+          <span>
+            {{ group.name }}
+          </span>
+          <div class="group-buttons-container"
+               *ngIf="groupId === group.id">
+            <button class="round-button group-button">
+              <span class="material-icons"
+                    [ngbPopover]="popContentUser"
+                    [popoverTitle]="popTitleUser"
+                    [autoClose]="false"
+                    container="body"
+                    #popoverUser="ngbPopover"
+                    placement="bottom">
+                person_add
+              </span>
+            </button>
+            <button class="round-button group-button">
+              <span class="material-icons"
+                    (click)="onGroupDeleted()">
+                delete
+              </span>
+            </button>
+          </div>
+        </button>
+      </div>
+    </ng-container>
+    <ng-template #noGroups>
+      <div class="no-groups">
+        <span>You have no groups. Create one!</span>
+        <span class="material-icons">north</span>
+      </div>
+    </ng-template>
   </div>
 </div>

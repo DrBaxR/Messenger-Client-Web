@@ -73,6 +73,29 @@
                 font-weight: bold;
             }
         }
+
+        .no-groups {
+            margin: 4px 0;
+            padding: 10px;
+            box-shadow: 0 3px 5px black;
+            border-radius: 10px;
+            background-color: #096622;
+            border: 0;
+            height: 50px;
+            color: white;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .material-icons {
+                width: 40px;
+                display: flex;
+                justify-content: center;
+                margin-right: 5px;
+            }
+        }
     }
 }
 .groups-list::-webkit-scrollbar {
@@ -141,16 +164,17 @@
     .members-container::-webkit-scrollbar {
         width: 7px;
     }
-    
+
     .members-container::-webkit-scrollbar-track {
-        border-radius: 10px
+        border-radius: 10px;
     }
-    
+
     .members-container::-webkit-scrollbar-thumb {
         border-radius: 10px;
         background-color: rgba(255, 255, 255, 0.322);
     }
 }
-a{
+
+a {
     color: #3e8e41;
 }

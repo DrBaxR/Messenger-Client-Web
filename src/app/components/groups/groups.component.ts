@@ -42,12 +42,14 @@ export class GroupsComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.userGroups) {
       if (this.userGroups) {
-        this.newGroupEvent.emit(this.userGroups[0].id);
+        this.newGroupEvent.emit(this.userGroups[0]?.id);
       }
     }
 
     if (changes.groupId) {
-      this.apiService.getGroupUsers(this.groupId).subscribe(users => this.selectedGroupUsers = users);
+      if(this.groupId) {
+        this.apiService.getGroupUsers(this.groupId).subscribe(users => this.selectedGroupUsers = users);
+      }
     }
   }
 
