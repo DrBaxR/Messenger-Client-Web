@@ -43,6 +43,15 @@
     </div>
     <div class="input"
          (keyup.enter)="onMessageSent()">
+        <i (click)="toggled = !toggled"
+           [(emojiPickerIf)]="toggled"
+           [emojiPickerDirection]="'left'"
+           (emojiPickerSelect)="handleSelection($event)"
+           class="send-button mr-15">
+            <span class="material-icons">
+                emoji_emotions
+            </span>
+        </i>
         <input class="user-input"
                [formControl]="messageInput">
         <button (click)="onMessageSent()"

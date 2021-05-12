@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AppMessage } from 'src/app/data-models/app-message';
 import { User } from 'src/app/data-models/user';
 import { ApiService } from 'src/app/services/api.service';
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-message-area',
@@ -31,6 +32,7 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
   endReached = false;
   scrolledUp = false;
   finishedFetching = true;
+  toggled = false;
 
   constructor(
     private apiService: ApiService,
@@ -154,5 +156,9 @@ export class MessageAreaComponent implements OnInit, OnDestroy, OnChanges, After
       this.extendMessagesToNextPage();
       this.scrolledUp = true;
     }
+  }
+
+  handleSelection(event) {
+    this.messageInput.setValue(`${this.messageInput.value}${event.char}`);
   }
 }

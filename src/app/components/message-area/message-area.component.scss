@@ -127,3 +127,7 @@
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.322);
 }
+
+::ng-deep emoji-picker {
+    transform: translateY(60px);
+}

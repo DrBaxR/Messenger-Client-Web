@@ -2,9 +2,9 @@
 FROM node:10-alpine as build-step
 
 WORKDIR /usr/src/app
-COPY package.json ./
+COPY package.json .
 RUN npm install
-COPY . ./
+COPY . .
 RUN npm run build --prod
 
 # Stage 2: run the nginx server

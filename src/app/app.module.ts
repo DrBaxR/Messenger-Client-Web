@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { PasswordForgotComponent } from './components/password-forgot/password-forgot.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { NgxEmojiPickerModule } from 'ngx-emoji-picker';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AuthGuard } from './services/auth-guard.service';
     NgbPaginationModule,
     NgbAlertModule,
     BrowserAnimationsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxEmojiPickerModule.forRoot()
   ],
   providers: [
     {

@@ -10,8 +10,7 @@ import { User } from '../data-models/user';
   providedIn: 'root'
 })
 export class ApiService {
-  // apiUrl = 'https://messenger-server-pkfomy4bva-lm.a.run.app';
-  apiUrl = 'http://localhost:8080';
+  apiUrl = 'https://messenger-server-pkfomy4bva-lm.a.run.app';
 
   jwt: string = null;
   userId: string = '';
@@ -149,7 +148,6 @@ export class ApiService {
     const body = {
       username
     }
-    //console.log(username);
 
     const observable = this.httpClient.put<User>(`${this.apiUrl}/users/${userId}`, body,
       {
