@@ -1,4 +1,4 @@
-# CLIENT WEB
+# Messenger Web Client
 
 ![image](https://user-images.githubusercontent.com/28231703/118353753-5f9cac80-b570-11eb-8207-1fd438ca0671.png)
 
