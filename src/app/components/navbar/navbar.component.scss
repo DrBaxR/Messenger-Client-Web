@@ -1,6 +1,7 @@
 .navbar-brand{
     font-size: 32px;
-
+    display: flex;
+    align-items: center;
 }
 .dropdown-toggle{
     cursor: pointer;
@@ -17,4 +18,8 @@
     padding-left: 40px;
     height: 54px;
     box-shadow: 0 0px 20px black;
+}
+
+.material-icons {
+    font-size: 32px;
 }
