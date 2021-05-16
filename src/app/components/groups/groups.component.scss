@@ -61,6 +61,19 @@
                         background-color: #44444448;
                     }
                 }
+
+                .notifications-counter {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: 500;
+                    height: 30px;
+                    width: 30px;
+                    margin-right: 10px;
+                    border-radius: 50%;
+                    background-color: white;
+                    color: black;
+                }
             }
 
             .button:hover {

@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
+import { Subscription } from 'rxjs';
 import { Group } from 'src/app/data-models/group';
 import { User } from 'src/app/data-models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -28,20 +31,29 @@ export class GroupsComponent implements OnInit, OnChanges {
   userEmailInput: FormControl;
   isEmailErrorVisible = false;
 
+  topicSubscriptions: Subscription[] = [];
+  groupNotifications: Map<string, number>;
+
   selectedGroupUsers: User[] = [];
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private rxStompService: RxStompService
   ) { }
 
   ngOnInit(): void {
     this.groupNameInput = new FormControl('', Validators.required);
     this.userEmailInput = new FormControl('', Validators.required);
+
+    this.groupNotifications = new Map<string, number>();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.userGroups) {
       if (this.userGroups) {
+        this.initializeNotificationsMap();
+        this.connectToAllGroupsSockets();
+
         this.newGroupEvent.emit(this.userGroups[0]?.id);
       }
     }
@@ -53,7 +65,15 @@ export class GroupsComponent implements OnInit, OnChanges {
     }
   }
 
+  initializeNotificationsMap() {
+    this.groupNotifications = new Map<string, number>();
+  
+    this.userGroups.forEach(group => this.groupNotifications.set(group.id, 0));
+  }
+
   changeGroup(group: string) {
+    this.groupNotifications.set(group, 0);
+
     this.newGroupEvent.emit(group);
   }
 
@@ -89,5 +109,30 @@ export class GroupsComponent implements OnInit, OnChanges {
 
   onGroupDeleted() {
     this.groupDeleted.emit(this.groupId);
+  }
+
+  unsubscribeFromAllGroupSockets() {
+    this.topicSubscriptions.forEach(subscription => {
+      subscription?.unsubscribe();
+    });
+
+    this.topicSubscriptions = [];
+  }
+
+  connectToAllGroupsSockets() {
+    this.unsubscribeFromAllGroupSockets();
+
+    this.userGroups.forEach(group => this.connectToGroupSocket(group.id))
+  }
+
+  connectToGroupSocket(groupId: string) {
+    const topicSubscription = this.rxStompService.watch(`/topic/group.${groupId}`).subscribe(() => {
+      if (groupId !== this.groupId) {
+        const oldValue = this.groupNotifications.get(groupId);
+        this.groupNotifications.set(groupId, oldValue + 1);
+      }
+    });
+
+    this.topicSubscriptions.push(topicSubscription);
   }
 }

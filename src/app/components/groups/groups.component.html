@@ -101,7 +101,7 @@
             {{ group.name }}
           </span>
           <div class="group-buttons-container"
-               *ngIf="groupId === group.id">
+               *ngIf="groupId === group.id; else notSelectedGroup">
             <button class="round-button group-button">
               <span class="material-icons"
                     [ngbPopover]="popContentUser"
@@ -120,6 +120,11 @@
               </span>
             </button>
           </div>
+          <ng-template #notSelectedGroup>
+            <div *ngIf="groupNotifications.get(group.id) as count" class="notifications-counter inset-shadow">
+              {{ count <= 99 ? count : '99+' }}
+            </div>
+          </ng-template>
         </button>
       </div>
     </ng-container>
