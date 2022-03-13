@@ -29,7 +29,8 @@ If you want to contribute to this project, just create a fork, add whatever you 
 ~~In case you only want to check out the application, you can run it locally via [Docker](https://www.docker.com/) (if you have it installed on your machine), by using the command ```docker run -dp 80:80 drbaxr/messenger-web```.~~
 
 ~~If you don't have Docker installed (or just don't want to run the application locally), it's also hosted on [GCP](https://cloud.google.com), so you can also access it [here](https://messenger-web-pkfomy4bva-lm.a.run.app/).~~
-Since free hosting period on GCP expired you will have to run both server and web app locally.
+
+Since free hosting period on GCP expired you will have to run both the server and the web app locally.
 
 # Dependencies
 
